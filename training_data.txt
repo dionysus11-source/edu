@@ -1,0 +1,3240 @@
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class OrderProcessor { private readonly ILogger<OrderProcessor> _logger; public void Process(int orderId) { _logger.LogInformation("Processing order with ID: {OrderId}", orderId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 1, Level = LogLevel.Information, Message = "Processing order with ID: {OrderId}")] public static partial void ProcessingOrder(ILogger logger, int orderId); } public class OrderProcessor { private readonly ILogger<OrderProcessor> _logger; public void Process(int orderId) { Log.ProcessingOrder(_logger, orderId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class UserAuthenticator { private readonly ILogger<UserAuthenticator> _logger; public void Authenticate(Guid userId, bool isSuccess) { _logger.LogWarning("Authentication for {UserId} resulted in Success: {IsSuccess}", userId, isSuccess); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 2, Level = LogLevel.Warning, Message = "Authentication for {UserId} resulted in Success: {IsSuccess}")] public static partial void AuthenticationResult(ILogger logger, Guid userId, bool isSuccess); } public class UserAuthenticator { private readonly ILogger<UserAuthenticator> _logger; public void Authenticate(Guid userId, bool isSuccess) { Log.AuthenticationResult(_logger, userId, isSuccess); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class PaymentGateway { private readonly ILogger<PaymentGateway> _logger; public void Process(decimal amount) { _logger.LogError("Payment failed with amount {Amount}", amount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 3, Level = LogLevel.Error, Message = "Payment failed with amount {Amount}")] public static partial void PaymentFailed(ILogger logger, decimal amount); } public class PaymentGateway { private readonly ILogger<PaymentGateway> _logger; public void Process(decimal amount) { Log.PaymentFailed(_logger, amount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SystemLogger { private readonly ILogger _logger; public SystemLogger(ILogger logger) { _logger = logger; } public void LogSyncComplete(long recordCount, TimeSpan duration) { _logger.LogDebug("Sync completed. {RecordCount} records in {DurationMs}ms.", recordCount, duration.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 4, Level = LogLevel.Debug, Message = "Sync completed. {RecordCount} records in {DurationMs}ms.")] public static partial void SyncCompleted(ILogger logger, long recordCount, double durationMs); } public class SystemLogger { private readonly ILogger _logger; public SystemLogger(ILogger logger) { _logger = logger; } public void LogSyncComplete(long recordCount, TimeSpan duration) { Log.SyncCompleted(_logger, recordCount, duration.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public enum ItemStatus { InStock, OutOfStock } public class InventoryManager { private readonly ILogger<InventoryManager> _logger; public void UpdateStock(int productId, ItemStatus status) { _logger.LogTrace("Updating stock for product {ProductId} to {Status}.", productId, status); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public enum ItemStatus { InStock, OutOfStock } public static partial class Log { [LoggerMessage(EventId = 5, Level = LogLevel.Trace, Message = "Updating stock for product {ProductId} to {Status}.")] public static partial void UpdateStockStatus(ILogger logger, int productId, ItemStatus status); } public class InventoryManager { private readonly ILogger<InventoryManager> _logger; public void UpdateStock(int productId, ItemStatus status) { Log.UpdateStockStatus(_logger, productId, status); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ReportGenerator { private readonly ILogger<ReportGenerator> _logger; public void Generate(Guid reportId, DateTime generatedAt) { _logger.LogInformation("Generated report {ReportId} at {GeneratedAt}", reportId, generatedAt); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 6, Level = LogLevel.Information, Message = "Generated report {ReportId} at {GeneratedAt}")] public static partial void ReportGenerated(ILogger logger, Guid reportId, DateTime generatedAt); } public class ReportGenerator { private readonly ILogger<ReportGenerator> _logger; public void Generate(Guid reportId, DateTime generatedAt) { Log.ReportGenerated(_logger, reportId, generatedAt); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class FileProcessor { private readonly ILogger<FileProcessor> _logger; public void Process(long fileSize, bool isReadOnly) { _logger.LogDebug("File Size: {FileSize}, ReadOnly: {IsReadOnly}", fileSize, isReadOnly); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 7, Level = LogLevel.Debug, Message = "File Size: {FileSize}, ReadOnly: {IsReadOnly}")] public static partial void ProcessingFile(ILogger logger, long fileSize, bool isReadOnly); } public class FileProcessor { private readonly ILogger<FileProcessor> _logger; public void Process(long fileSize, bool isReadOnly) { Log.ProcessingFile(_logger, fileSize, isReadOnly); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ApiController { private readonly ILogger<ApiController> _logger; public void HandleRequest(string endpointName) { _logger.LogInformation("Handled request for endpoint {EndpointName}", endpointName); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 8, Level = LogLevel.Information, Message = "Handled request for endpoint {EndpointName}")] public static partial void RequestHandled(ILogger logger, string endpointName); } public class ApiController { private readonly ILogger<ApiController> _logger; public void HandleRequest(string endpointName) { Log.RequestHandled(_logger, endpointName); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SecurityWrapper { private readonly ILogger _logger; public SecurityWrapper(ILogger logger) { _logger = logger; } public void LogTokenValidation(Guid tokenId, DateTime expiry) { _logger.LogWarning("Token {TokenId} nearing expiration at {Expiry}.", tokenId, expiry); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 9, Level = LogLevel.Warning, Message = "Token {TokenId} nearing expiration at {Expiry}.")] public static partial void TokenExpiring(ILogger logger, Guid tokenId, DateTime expiry); } public class SecurityWrapper { private readonly ILogger _logger; public SecurityWrapper(ILogger logger) { _logger = logger; } public void LogTokenValidation(Guid tokenId, DateTime expiry) { Log.TokenExpiring(_logger, tokenId, expiry); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public struct Point { public int X, Y; } public class GeometryEngine { private readonly ILogger<GeometryEngine> _logger; public void Process(Point p) { _logger.LogTrace("Processing point at ({X}, {Y})", p.X, p.Y); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public struct Point { public int X, Y; } public static partial class Log { [LoggerMessage(EventId = 10, Level = LogLevel.Trace, Message = "Processing point at ({X}, {Y})")] public static partial void ProcessingPoint(ILogger logger, int x, int y); } public class GeometryEngine { private readonly ILogger<GeometryEngine> _logger; public void Process(Point p) { Log.ProcessingPoint(_logger, p.X, p.Y); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class EventPublisher { private readonly ILogger<EventPublisher> _logger; public void Publish(long partitionKey) { _logger.LogInformation("Publishing to partition {PartitionKey}.", partitionKey); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 11, Level = LogLevel.Information, Message = "Publishing to partition {PartitionKey}.")] public static partial void PublishingEvent(ILogger logger, long partitionKey); } public class EventPublisher { private readonly ILogger<EventPublisher> _logger; public void Publish(long partitionKey) { Log.PublishingEvent(_logger, partitionKey); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class TaskScheduler { private readonly ILogger<TaskScheduler> _logger; public void Schedule(DateTimeOffset runAt, bool isRecurring) { _logger.LogDebug("Scheduled to run at {RunAt}. Recurring: {IsRecurring}", runAt, isRecurring); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 12, Level = LogLevel.Debug, Message = "Scheduled to run at {RunAt}. Recurring: {IsRecurring}")] public static partial void TaskScheduled(ILogger logger, DateTimeOffset runAt, bool isRecurring); } public class TaskScheduler { private readonly ILogger<TaskScheduler> _logger; public void Schedule(DateTimeOffset runAt, bool isRecurring) { Log.TaskScheduled(_logger, runAt, isRecurring); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class MessageQueueConsumer { private readonly ILogger<MessageQueueConsumer> _logger; public void Consume(long messageId) { _logger.LogError("Failed to process message {MessageId}", messageId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 13, Level = LogLevel.Error, Message = "Failed to process message {MessageId}")] public static partial void MessageProcessingFailed(ILogger logger, long messageId); } public class MessageQueueConsumer { private readonly ILogger<MessageQueueConsumer> _logger; public void Consume(long messageId) { Log.MessageProcessingFailed(_logger, messageId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ConfigHelper { private readonly ILogger<ConfigHelper> _logger; public void Load(int? version) { _logger.LogInformation("Loading config version {Version}", version); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 14, Level = LogLevel.Information, Message = "Loading config version {Version}")] public static partial void LoadingConfiguration(ILogger logger, int? version); } public class ConfigHelper { private readonly ILogger<ConfigHelper> _logger; public void Load(int? version) { Log.LoadingConfiguration(_logger, version); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class HealthChecker { private readonly ILogger<HealthChecker> _logger; public void Report(bool isHealthy, short responseTime) { _logger.LogWarning("Health: Healthy={IsHealthy}, ResponseTime={ResponseTime}ms", isHealthy, responseTime); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 15, Level = LogLevel.Warning, Message = "Health: Healthy={IsHealthy}, ResponseTime={ResponseTime}ms")] public static partial void HealthCheckResult(ILogger logger, bool isHealthy, short responseTime); } public class HealthChecker { private readonly ILogger<HealthChecker> _logger; public void Report(bool isHealthy, short responseTime) { Log.HealthCheckResult(_logger, isHealthy, responseTime); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SessionManager { private readonly ILogger<SessionManager> _logger; public void Create(Guid sessionId, char sessionType) { _logger.LogInformation("Session {SessionId} of type {SessionType} created.", sessionId, sessionType); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 16, Level = LogLevel.Information, Message = "Session {SessionId} of type {SessionType} created.")] public static partial void SessionCreated(ILogger logger, Guid sessionId, char sessionType); } public class SessionManager { private readonly ILogger<SessionManager> _logger; public void Create(Guid sessionId, char sessionType) { Log.SessionCreated(_logger, sessionId, sessionType); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class DatabaseMigrator { private readonly ILogger<DatabaseMigrator> _logger; public void Migrate(int version, string description) { _logger.LogError("Failed to migrate to version {Version} ({Description})", version, description); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 17, Level = LogLevel.Error, Message = "Failed to migrate to version {Version} ({Description})")] public static partial void MigrationFailed(ILogger logger, int version, string description); } public class DatabaseMigrator { private readonly ILogger<DatabaseMigrator> _logger; public void Migrate(int version, string description) { Log.MigrationFailed(_logger, version, description); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ImageResizer { private readonly ILogger<ImageResizer> _logger; public void Resize(ushort width, ushort height) { _logger.LogDebug("Resizing to {Width}x{Height}.", width, height); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 18, Level = LogLevel.Debug, Message = "Resizing to {Width}x{Height}.")] public static partial void ResizingImage(ILogger logger, ushort width, ushort height); } public class ImageResizer { private readonly ILogger<ImageResizer> _logger; public void Resize(ushort width, ushort height) { Log.ResizingImage(_logger, width, height); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class NotificationService { private readonly ILogger<NotificationService> _logger; public void Send(byte notificationType, int userId) { _logger.LogInformation("Sending type {NotificationType} to user {UserId}", notificationType, userId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 19, Level = LogLevel.Information, Message = "Sending type {NotificationType} to user {UserId}")] public static partial void SendingNotification(ILogger logger, byte notificationType, int userId); } public class NotificationService { private readonly ILogger<NotificationService> _logger; public void Send(byte notificationType, int userId) { Log.SendingNotification(_logger, notificationType, userId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ProductCatalog { private readonly ILogger<ProductCatalog> _logger; public void GetProduct(int productId, Guid? versionId) { _logger.LogTrace("Fetching product {ProductId} with version {VersionId}.", productId, versionId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 20, Level = LogLevel.Trace, Message = "Fetching product {ProductId} with version {VersionId}.")] public static partial void FetchingProduct(ILogger logger, int productId, Guid? versionId); } public class ProductCatalog { private readonly ILogger<ProductCatalog> _logger; public void GetProduct(int productId, Guid? versionId) { Log.FetchingProduct(_logger, productId, versionId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SearchIndexer { private readonly ILogger<SearchIndexer> _logger; public void Index(long documentId, DateTime indexedAt) { _logger.LogInformation("Indexing document {DocumentId} at {IndexedAt}", documentId, indexedAt); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 21, Level = LogLevel.Information, Message = "Indexing document {DocumentId} at {IndexedAt}")] public static partial void IndexingDocument(ILogger logger, long documentId, DateTime indexedAt); } public class SearchIndexer { private readonly ILogger<SearchIndexer> _logger; public void Index(long documentId, DateTime indexedAt) { Log.IndexingDocument(_logger, documentId, indexedAt); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class JobRunnerWrapper { private readonly ILogger _logger; public JobRunnerWrapper(ILogger logger) { _logger = logger; } public void Run(Guid jobId, sbyte priority) { _logger.LogDebug("Running job {JobId} with priority {Priority}.", jobId, priority); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 22, Level = LogLevel.Debug, Message = "Running job {JobId} with priority {Priority}.")] public static partial void RunningJob(ILogger logger, Guid jobId, sbyte priority); } public class JobRunnerWrapper { private readonly ILogger _logger; public JobRunnerWrapper(ILogger logger) { _logger = logger; } public void Run(Guid jobId, sbyte priority) { Log.RunningJob(_logger, jobId, priority); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AuditLogger { private readonly ILogger<AuditLogger> _logger; public void LogAction(int userId, ulong permissions) { _logger.LogInformation("User {UserId} has permissions {Permissions}.", userId, permissions); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 23, Level = LogLevel.Information, Message = "User {UserId} has permissions {Permissions}.")] public static partial void UserAction(ILogger logger, int userId, ulong permissions); } public class AuditLogger { private readonly ILogger<AuditLogger> _logger; public void LogAction(int userId, ulong permissions) { Log.UserAction(_logger, userId, permissions); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ConnectionManager { private readonly ILogger<ConnectionManager> _logger; public void Connect(string host, uint port) { _logger.LogWarning("Connection to {Host}:{Port} failed.", host, port); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 24, Level = LogLevel.Warning, Message = "Connection to {Host}:{Port} failed.")] public static partial void ConnectionFailed(ILogger logger, string host, uint port); } public class ConnectionManager { private readonly ILogger<ConnectionManager> _logger; public void Connect(string host, uint port) { Log.ConnectionFailed(_logger, host, port); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class BackupService { private readonly ILogger<BackupService> _logger; public void StartBackup(string volumeName) { _logger.LogInformation("Starting backup for volume {VolumeName}.", volumeName); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 25, Level = LogLevel.Information, Message = "Starting backup for volume {VolumeName}.")] public static partial void BackupStarting(ILogger logger, string volumeName); } public class BackupService { private readonly ILogger<BackupService> _logger; public void StartBackup(string volumeName) { Log.BackupStarting(_logger, volumeName); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AssetBundleLoader { private readonly ILogger _log; public void Load(string bundleName, uint crc) { _log.LogInformation("Loading asset bundle {BundleName} with CRC {Crc}", bundleName, crc); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 51, Level = LogLevel.Information, Message = "Loading asset bundle {BundleName} with CRC {Crc}")] public static partial void LoadingAssetBundle(ILogger logger, string bundleName, uint crc); } public class AssetBundleLoader { private readonly ILogger _log; public void Load(string bundleName, uint crc) { Log.LoadingAssetBundle(_log, bundleName, crc); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ApiGateway { private readonly ILogger _telemetry; public void LogRequest(string path, TimeSpan latency) { _telemetry.LogInformation("Request to {Path} completed in {LatencyMs}ms.", path, latency.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 52, Level = LogLevel.Information, Message = "Request to {Path} completed in {LatencyMs}ms.")] public static partial void RequestCompleted(ILogger logger, string path, double latencyMs); } public class ApiGateway { private readonly ILogger _telemetry; public void LogRequest(string path, TimeSpan latency) { Log.RequestCompleted(_telemetry, path, latency.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ServiceBusPublisher { private readonly ILogger log; public void Publish(Guid messageId, int size) { log.LogDebug("Publishing message {MessageId}. Size: {Size} bytes", messageId, size); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 53, Level = LogLevel.Debug, Message = "Publishing message {MessageId}. Size: {Size} bytes")] public static partial void PublishingMessage(ILogger logger, Guid messageId, int size); } public class ServiceBusPublisher { private readonly ILogger log; public void Publish(Guid messageId, int size) { Log.PublishingMessage(log, messageId, size); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class FileSystemMonitor { private readonly ILogger _eventLog; public void OnChanged(WatcherChangeTypes changeType) { _eventLog.LogWarning("File system change detected. Type: {ChangeType}.", changeType); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 54, Level = LogLevel.Warning, Message = "File system change detected. Type: {ChangeType}.")] public static partial void FileSystemChanged(ILogger logger, WatcherChangeTypes changeType); } public class FileSystemMonitor { private readonly ILogger _eventLog; public void OnChanged(WatcherChangeTypes changeType) { Log.FileSystemChanged(_eventLog, changeType); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SpellcheckService { private readonly ILogger logger; public void Check(int wordCount, bool success) { logger.LogTrace("Spellcheck for {WordCount} words succeeded: {Success}", wordCount, success); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 55, Level = LogLevel.Trace, Message = "Spellcheck for {WordCount} words succeeded: {Success}")] public static partial void SpellcheckComplete(ILogger logger, int wordCount, bool success); } public class SpellcheckService { private readonly ILogger logger; public void Check(int wordCount, bool success) { Log.SpellcheckComplete(logger, wordCount, success); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AccessControlService { private readonly ILogger _securityLogger; public void CheckAccess(int userId, bool isGranted) { _securityLogger.LogError("Access for user {UserId} was granted: {IsGranted}", userId, isGranted); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 56, Level = LogLevel.Error, Message = "Access for user {UserId} was granted: {IsGranted}")] public static partial void AccessCheck(ILogger logger, int userId, bool isGranted); } public class AccessControlService { private readonly ILogger _securityLogger; public void CheckAccess(int userId, bool isGranted) { Log.AccessCheck(_securityLogger, userId, isGranted); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class DataCompressionService { private readonly ILogger _perfLogger; public void Compress(long originalSize, short level) { _perfLogger.LogDebug("Compressed from {OriginalSize} at level {Level}.", originalSize, level); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 57, Level = LogLevel.Debug, Message = "Compressed from {OriginalSize} at level {Level}.")] public static partial void CompressionInfo(ILogger logger, long originalSize, short level); } public class DataCompressionService { private readonly ILogger _perfLogger; public void Compress(long originalSize, short level) { Log.CompressionInfo(_perfLogger, originalSize, level); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class PaymentReconciliationService { private readonly ILogger audit; public void Reconcile(Guid batchId, decimal totalAmount) { audit.LogInformation("Reconciling batch {BatchId} totaling {TotalAmount}.", batchId, totalAmount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 58, Level = LogLevel.Information, Message = "Reconciling batch {BatchId} totaling {TotalAmount}.")] public static partial void Reconciling(ILogger logger, Guid batchId, decimal totalAmount); } public class PaymentReconciliationService { private readonly ILogger audit; public void Reconcile(Guid batchId, decimal totalAmount) { Log.Reconciling(audit, batchId, totalAmount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ObjectSerializer { private readonly ILogger _trace; public void Serialize(int objectId, long size) { _trace.LogTrace("Serializing object {ObjectId}. Size: {Size}", objectId, size); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 59, Level = LogLevel.Trace, Message = "Serializing object {ObjectId}. Size: {Size}")] public static partial void SerializingObject(ILogger logger, int objectId, long size); } public class ObjectSerializer { private readonly ILogger _trace; public void Serialize(int objectId, long size) { Log.SerializingObject(_trace, objectId, size); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class WebCrawler { private readonly ILogger _logger; public void Crawl(int depth, bool allowed) { _logger.LogInformation("Crawling at depth {Depth}. Allowed: {Allowed}", depth, allowed); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 60, Level = LogLevel.Information, Message = "Crawling at depth {Depth}. Allowed: {Allowed}")] public static partial void Crawling(ILogger logger, int depth, bool allowed); } public class WebCrawler { private readonly ILogger _logger; public void Crawl(int depth, bool allowed) { Log.Crawling(_logger, depth, allowed); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class TaskDispatcher { private readonly ILogger _log; public void Dispatch(long taskId, Guid workerId) { _log.LogDebug("Dispatching task {TaskId} to worker {WorkerId}.", taskId, workerId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 61, Level = LogLevel.Debug, Message = "Dispatching task {TaskId} to worker {WorkerId}.")] public static partial void DispatchingTask(ILogger logger, long taskId, Guid workerId); } public class TaskDispatcher { private readonly ILogger _log; public void Dispatch(long taskId, Guid workerId) { Log.DispatchingTask(_log, taskId, workerId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AuthenticationProvider { private readonly ILogger _authLog; public void Validate(bool isValid, int? attempt) { _authLog.LogWarning("Validation was valid: {IsValid}. Attempt: {Attempt}", isValid, attempt); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 62, Level = LogLevel.Warning, Message = "Validation was valid: {IsValid}. Attempt: {Attempt}")] public static partial void ValidationAttempt(ILogger logger, bool isValid, int? attempt); } public class AuthenticationProvider { private readonly ILogger _authLog; public void Validate(bool isValid, int? attempt) { Log.ValidationAttempt(_authLog, isValid, attempt); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CircuitBreaker { private readonly ILogger _logger; public void StateChanged(TimeSpan duration) { _logger.LogError("Circuit changed state for {DurationSeconds} seconds.", duration.TotalSeconds); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 63, Level = LogLevel.Error, Message = "Circuit changed state for {DurationSeconds} seconds.")] public static partial void CircuitStateChanged(ILogger logger, double durationSeconds); } public class CircuitBreaker { private readonly ILogger _logger; public void StateChanged(TimeSpan duration) { Log.CircuitStateChanged(_logger, duration.TotalSeconds); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CacheWarmer { private readonly ILogger FsLogger; public void WarmUp(int itemCount, long memoryUsage) { FsLogger.LogInformation("Warming up cache. Items: {ItemCount}, Memory: {MemoryBytes} bytes.", itemCount, memoryUsage); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 64, Level = LogLevel.Information, Message = "Warming up cache. Items: {ItemCount}, Memory: {MemoryBytes} bytes.")] public static partial void WarmingCache(ILogger logger, int itemCount, long memoryUsage); } public class CacheWarmer { private readonly ILogger FsLogger; public void WarmUp(int itemCount, long memoryUsage) { Log.WarmingCache(FsLogger, itemCount, memoryUsage); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ResourceGovernor { private readonly ILogger logger; public void Throttle(int cpuLimit, int memoryLimit) { logger.LogWarning("Throttling instance. CPU limit: {CpuLimit}%, Memory limit: {MemoryLimit}MB.", cpuLimit, memoryLimit); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 65, Level = LogLevel.Warning, Message = "Throttling instance. CPU limit: {CpuLimit}%, Memory limit: {MemoryLimit}MB.")] public static partial void Throttling(ILogger logger, int cpuLimit, int memoryLimit); } public class ResourceGovernor { private readonly ILogger logger; public void Throttle(int cpuLimit, int memoryLimit) { Log.Throttling(logger, cpuLimit, memoryLimit); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AlertingService { private readonly ILogger _log; public void TriggerAlert(decimal value, decimal threshold) { _log.LogCritical("Value {Value} exceeded threshold {Threshold}", value, threshold); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 66, Level = LogLevel.Critical, Message = "Value {Value} exceeded threshold {Threshold}")] public static partial void AlertTriggered(ILogger logger, decimal value, decimal threshold); } public class AlertingService { private readonly ILogger _log; public void TriggerAlert(decimal value, decimal threshold) { Log.AlertTriggered(_log, value, threshold); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class LoadBalancer { private readonly ILogger _networkLog; public void RouteRequest(long requestId, Guid serverId) { _networkLog.LogTrace("Routing request {RequestId} to server {ServerId}.", requestId, serverId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 67, Level = LogLevel.Trace, Message = "Routing request {RequestId} to server {ServerId}.")] public static partial void RoutingRequest(ILogger logger, long requestId, Guid serverId); } public class LoadBalancer { private readonly ILogger _networkLog; public void RouteRequest(long requestId, Guid serverId) { Log.RoutingRequest(_networkLog, requestId, serverId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class EventDeserializer { private readonly ILogger _logger; public void Deserialize(Guid eventId, bool success) { _logger.LogDebug("Deserialization of event {EventId} was successful: {Success}.", eventId, success); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 68, Level = LogLevel.Debug, Message = "Deserialization of event {EventId} was successful: {Success}.")] public static partial void DeserializationResult(ILogger logger, Guid eventId, bool success); } public class EventDeserializer { private readonly ILogger _logger; public void Deserialize(Guid eventId, bool success) { Log.DeserializationResult(_logger, eventId, success); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class GeoFenceService { private readonly ILogger _geoLog; public void CheckPosition(int deviceId, double latitude) { _geoLog.LogInformation("Checking position for device {DeviceId}: {Latitude}", deviceId, latitude); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 69, Level = LogLevel.Information, Message = "Checking position for device {DeviceId}: {Latitude}")] public static partial void CheckingPosition(ILogger logger, int deviceId, double latitude); } public class GeoFenceService { private readonly ILogger _geoLog; public void CheckPosition(int deviceId, double latitude) { Log.CheckingPosition(_geoLog, deviceId, latitude); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AclManager { private readonly ILogger _logger; public void UpdateAcl(int principalId, string permissions) { _logger.LogWarning("Updating ACL for principal: {PrincipalId} with permissions {Permissions}", principalId, permissions); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 70, Level = LogLevel.Warning, Message = "Updating ACL for principal: {PrincipalId} with permissions {Permissions}")] public static partial void UpdatingAcl(ILogger logger, int principalId, string permissions); } public class AclManager { private readonly ILogger _logger; public void UpdateAcl(int principalId, string permissions) { Log.UpdatingAcl(_logger, principalId, permissions); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class LanguageDetector { private readonly ILogger _logger; public void Detect(Guid textId, float confidence) { _logger.LogDebug("Detected language for text {TextId} with confidence {Confidence}.", textId, confidence); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 71, Level = LogLevel.Debug, Message = "Detected language for text {TextId} with confidence {Confidence}.")] public static partial void LanguageDetected(ILogger logger, Guid textId, float confidence); } public class LanguageDetector { private readonly ILogger _logger; public void Detect(Guid textId, float confidence) { Log.LanguageDetected(_logger, textId, confidence); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class RecommendationEngine { private readonly ILogger _engineLog; public void GetRecommendations(int userId, bool includeSeen) { _engineLog.LogTrace("Getting recommendations for user {UserId}. Include seen: {IncludeSeen}", userId, includeSeen); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 72, Level = LogLevel.Trace, Message = "Getting recommendations for user {UserId}. Include seen: {IncludeSeen}")] public static partial void GettingRecommendations(ILogger logger, int userId, bool includeSeen); } public class RecommendationEngine { private readonly ILogger _engineLog; public void GetRecommendations(int userId, bool includeSeen) { Log.GettingRecommendations(_engineLog, userId, includeSeen); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class LoggerWrapper { private readonly ILogger _baseLogger; public void LogEvent(string eventName, int eventId) { _baseLogger.LogInformation("Event: {EventName}, ID: {EventId}", eventName, eventId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 73, Level = LogLevel.Information, Message = "Event: {EventName}, ID: {EventId}")] public static partial void CustomEvent(ILogger logger, string eventName, int eventId); } public class LoggerWrapper { private readonly ILogger _baseLogger; public void LogEvent(string eventName, int eventId) { Log.CustomEvent(_baseLogger, eventName, eventId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class UdpListener { private readonly ILogger _listenerLog; public void Listen(int port, int bufferSize) { _listenerLog.LogInformation("Listening on port {Port} with buffer size {BufferSize}", port, bufferSize); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 74, Level = LogLevel.Information, Message = "Listening on port {Port} with buffer size {BufferSize}")] public static partial void UdpListening(ILogger logger, int port, int bufferSize); } public class UdpListener { private readonly ILogger _listenerLog; public void Listen(int port, int bufferSize) { Log.UdpListening(_listenerLog, port, bufferSize); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class WorkflowEngine { private readonly ILogger _workflowLogger; public void AdvanceState(Guid workflowId, int currentState, int nextState) { _workflowLogger.LogDebug("Advancing workflow {WorkflowId} from state {CurrentState} to {NextState}", workflowId, currentState, nextState); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 75, Level = LogLevel.Debug, Message = "Advancing workflow {WorkflowId} from state {CurrentState} to {NextState}")] public static partial void AdvancingWorkflow(ILogger logger, Guid workflowId, int currentState, int nextState); } public class WorkflowEngine { private readonly ILogger _workflowLogger; public void AdvanceState(Guid workflowId, int currentState, int nextState) { Log.AdvancingWorkflow(_workflowLogger, workflowId, currentState, nextState); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class UserProfileUpdater { private readonly ILogger _log; public void UpdateAge(int userId, int age) { _log.LogError("Failed to update age for user {UserId} to {Age}", userId, age); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 76, Level = LogLevel.Error, Message = "Failed to update age for user {UserId} to {Age}")] public static partial void ProfileAgeUpdateFailed(ILogger logger, int userId, int age); } public class UserProfileUpdater { private readonly ILogger _log; public void UpdateAge(int userId, int age) { Log.ProfileAgeUpdateFailed(_log, userId, age); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AssetBundleManager { private readonly ILogger logger; public void Load(uint crc, long offset) { logger.LogInformation("Loading asset bundle with CRC {Crc} from offset {Offset}", crc, offset); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 77, Level = LogLevel.Information, Message = "Loading asset bundle with CRC {Crc} from offset {Offset}")] public static partial void LoadingAssetBundleWithOffset(ILogger logger, uint crc, long offset); } public class AssetBundleManager { private readonly ILogger logger; public void Load(uint crc, long offset) { Log.LoadingAssetBundleWithOffset(logger, crc, offset); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ApiGatewayLogger { private readonly ILogger _internalLogger; public void LogRequest(int statusCode, TimeSpan latency) { _internalLogger.LogInformation("Request completed with status {StatusCode} in {LatencyMs}ms.", statusCode, latency.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 78, Level = LogLevel.Information, Message = "Request completed with status {StatusCode} in {LatencyMs}ms.")] public static partial void RequestCompletedWithStatus(ILogger logger, int statusCode, double latencyMs); } public class ApiGatewayLogger { private readonly ILogger _internalLogger; public void LogRequest(int statusCode, TimeSpan latency) { Log.RequestCompletedWithStatus(_internalLogger, statusCode, latency.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ServiceBusMessagePublisher { private readonly ILogger _publisherLog; public void Publish(string topicName, int size) { _publisherLog.LogDebug("Publishing to topic '{TopicName}'. Size: {Size} bytes", topicName, size); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 79, Level = LogLevel.Debug, Message = "Publishing to topic '{TopicName}'. Size: {Size} bytes")] public static partial void PublishingToTopic(ILogger logger, string topicName, int size); } public class ServiceBusMessagePublisher { private readonly ILogger _publisherLog; public void Publish(string topicName, int size) { Log.PublishingToTopic(_publisherLog, topicName, size); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class FileWatcherService { private readonly ILogger FSLogger; public void OnError(int errorCode) { FSLogger.LogCritical("File watcher failed with error code: {ErrorCode}.", errorCode); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 80, Level = LogLevel.Critical, Message = "File watcher failed with error code: {ErrorCode}.")] public static partial void FileWatcherFailed(ILogger logger, int errorCode); } public class FileWatcherService { private readonly ILogger FSLogger; public void OnError(int errorCode) { Log.FileWatcherFailed(FSLogger, errorCode); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class TextAnalysisService { private readonly ILogger _analysisLogger; public void Analyze(int wordCount, bool isProfane) { _analysisLogger.LogTrace("Analyzed {WordCount} words. Profanity detected: {IsProfane}", wordCount, isProfane); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 81, Level = LogLevel.Trace, Message = "Analyzed {WordCount} words. Profanity detected: {IsProfane}")] public static partial void AnalysisComplete(ILogger logger, int wordCount, bool isProfane); } public class TextAnalysisService { private readonly ILogger _analysisLogger; public void Analyze(int wordCount, bool isProfane) { Log.AnalysisComplete(_analysisLogger, wordCount, isProfane); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class PermissionService { private readonly ILogger _securityLog; public void GrantPermission(string principal, int permissionLevel) { _securityLog.LogError("Granting permission level {PermissionLevel} to principal {Principal}", permissionLevel, principal); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 82, Level = LogLevel.Error, Message = "Granting permission level {PermissionLevel} to principal {Principal}")] public static partial void GrantingPermission(ILogger logger, int permissionLevel, string principal); } public class PermissionService { private readonly ILogger _securityLog; public void GrantPermission(string principal, int permissionLevel) { Log.GrantingPermission(_securityLog, permissionLevel, principal); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class DecompressionUnit { private readonly ILogger _unitLogger; public void Decompress(long originalSize, short algorithmId) { _unitLogger.LogDebug("Decompressing from {OriginalSize} using algorithm {AlgorithmId}.", originalSize, algorithmId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 83, Level = LogLevel.Debug, Message = "Decompressing from {OriginalSize} using algorithm {AlgorithmId}.")] public static partial void DecompressionInfo(ILogger logger, long originalSize, short algorithmId); } public class DecompressionUnit { private readonly ILogger _unitLogger; public void Decompress(long originalSize, short algorithmId) { Log.DecompressionInfo(_unitLogger, originalSize, algorithmId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AuditWrapper { private readonly ILogger _audit; public void Log(Guid batchId, string result) { _audit.LogInformation("Audit batch {BatchId} resulted in {Result}.", batchId, result); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 84, Level = LogLevel.Information, Message = "Audit batch {BatchId} resulted in {Result}.")] public static partial void AuditResult(ILogger logger, Guid batchId, string result); } public class AuditWrapper { private readonly ILogger _audit; public void Log(Guid batchId, string result) { Log.AuditResult(_audit, batchId, result); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SerializationManager { private readonly ILogger _log; public void LogTrace(int objectId, long size) { _log.LogTrace("Object {ObjectId}. Size: {Size}", objectId, size); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 85, Level = LogLevel.Trace, Message = "Object {ObjectId}. Size: {Size}")] public static partial void SerializingObjectTrace(ILogger logger, int objectId, long size); } public class SerializationManager { private readonly ILogger _log; public void LogTrace(int objectId, long size) { Log.SerializingObjectTrace(_log, objectId, size); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class UrlScanner { private readonly ILogger<UrlScanner> _logger; public void Scan(int depth, bool isAllowed) { _logger.LogInformation("Scanning at depth {Depth}. Allowed: {IsAllowed}", depth, isAllowed); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 86, Level = LogLevel.Information, Message = "Scanning at depth {Depth}. Allowed: {IsAllowed}")] public static partial void ScanningUrl(ILogger logger, int depth, bool isAllowed); } public class UrlScanner { private readonly ILogger<UrlScanner> _logger; public void Scan(int depth, bool isAllowed) { Log.ScanningUrl(_logger, depth, isAllowed); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class WorkerDispatcher { private readonly ILogger _dispatcherLog; public void Dispatch(long taskId, Guid workerId) { _dispatcherLog.LogDebug("Dispatching task {TaskId} to worker {WorkerId}.", taskId, workerId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 87, Level = LogLevel.Debug, Message = "Dispatching task {TaskId} to worker {WorkerId}.")] public static partial void DispatchingWorkerTask(ILogger logger, long taskId, Guid workerId); } public class WorkerDispatcher { private readonly ILogger _dispatcherLog; public void Dispatch(long taskId, Guid workerId) { Log.DispatchingWorkerTask(_dispatcherLog, taskId, workerId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CredentialValidator { private readonly ILogger log; public void Validate(string username, int? attemptCount) { log.LogWarning("Validation for '{Username}' on attempt {AttemptCount}", username, attemptCount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 88, Level = LogLevel.Warning, Message = "Validation for '{Username}' on attempt {AttemptCount}")] public static partial void ValidationCredentialAttempt(ILogger logger, string username, int? attemptCount); } public class CredentialValidator { private readonly ILogger log; public void Validate(string username, int? attemptCount) { Log.ValidationCredentialAttempt(log, username, attemptCount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CircuitStateManager { private readonly ILogger logger; public void ChangeState(string circuitName) { logger.LogError("Circuit '{CircuitName}' changed state.", circuitName); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 89, Level = LogLevel.Error, Message = "Circuit '{CircuitName}' changed state.")] public static partial void CircuitStateChanged(ILogger logger, string circuitName); } public class CircuitStateManager { private readonly ILogger logger; public void ChangeState(string circuitName) { Log.CircuitStateChanged(logger, circuitName); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CacheInitializer { private readonly ILogger _log; public void Initialize(int itemCount, long memoryUsage) { _log.LogInformation("Initializing cache. Items: {ItemCount}, Memory: {MemoryBytes} bytes.", itemCount, memoryUsage); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 90, Level = LogLevel.Information, Message = "Initializing cache. Items: {ItemCount}, Memory: {MemoryBytes} bytes.")] public static partial void InitializingCache(ILogger logger, int itemCount, long memoryUsage); } public class CacheInitializer { private readonly ILogger _log; public void Initialize(int itemCount, long memoryUsage) { Log.InitializingCache(_log, itemCount, memoryUsage); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class Governor { private readonly ILogger<Governor> _governorLog; public void Throttle(int cpuLimit) { _governorLog.LogWarning("Throttling instance. CPU limit: {CpuLimit}%.", cpuLimit); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 91, Level = LogLevel.Warning, Message = "Throttling instance. CPU limit: {CpuLimit}%.")] public static partial void ThrottlingCpu(ILogger logger, int cpuLimit); } public class Governor { private readonly ILogger<Governor> _governorLog; public void Throttle(int cpuLimit) { Log.ThrottlingCpu(_governorLog, cpuLimit); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AlertManager { private readonly ILogger log; public void Trigger(decimal threshold) { log.LogCritical("Threshold {Threshold} exceeded", threshold); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 92, Level = LogLevel.Critical, Message = "Threshold {Threshold} exceeded")] public static partial void ThresholdExceeded(ILogger logger, decimal threshold); } public class AlertManager { private readonly ILogger log; public void Trigger(decimal threshold) { Log.ThresholdExceeded(log, threshold); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class RequestRouter { private readonly ILogger _routerLog; public void Route(long requestId, Guid serverId) { _routerLog.LogTrace("Routing request {RequestId} to server {ServerId}.", requestId, serverId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 93, Level = LogLevel.Trace, Message = "Routing request {RequestId} to server {ServerId}.")] public static partial void RoutingRequestToServer(ILogger logger, long requestId, Guid serverId); } public class RequestRouter { private readonly ILogger _routerLog; public void Route(long requestId, Guid serverId) { Log.RoutingRequestToServer(_routerLog, requestId, serverId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class EventParser { private readonly ILogger logger; public void Parse(Guid eventId, bool success) { logger.LogDebug("Parsing of event {EventId} was successful: {Success}.", eventId, success); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 94, Level = LogLevel.Debug, Message = "Parsing of event {EventId} was successful: {Success}.")] public static partial void ParsingResult(ILogger logger, Guid eventId, bool success); } public class EventParser { private readonly ILogger logger; public void Parse(Guid eventId, bool success) { Log.ParsingResult(logger, eventId, success); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class GeoService { private readonly ILogger _log; public void Check(double latitude, double longitude) { _log.LogInformation("Checking position: {Latitude},{Longitude}", latitude, longitude); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 95, Level = LogLevel.Information, Message = "Checking position: {Latitude},{Longitude}")] public static partial void CheckingGeoPosition(ILogger logger, double latitude, double longitude); } public class GeoService { private readonly ILogger _log; public void Check(double latitude, double longitude) { Log.CheckingGeoPosition(_log, latitude, longitude); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AclManager { private readonly ILogger _aclLog; public void Update(int principalId, string permissions) { _aclLog.LogWarning("Updating ACL for principal: {PrincipalId} with permissions {Permissions}", principalId, permissions); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 96, Level = LogLevel.Warning, Message = "Updating ACL for principal: {PrincipalId} with permissions {Permissions}")] public static partial void UpdatingAclPermissions(ILogger logger, int principalId, string permissions); } public class AclManager { private readonly ILogger _aclLog; public void Update(int principalId, string permissions) { Log.UpdatingAclPermissions(_aclLog, principalId, permissions); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class LanguageService { private readonly ILogger logger; public void Detect(float confidence) { logger.LogDebug("Detected language with confidence {Confidence}.", confidence); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 97, Level = LogLevel.Debug, Message = "Detected language with confidence {Confidence}.")] public static partial void LanguageDetectionConfidence(ILogger logger, float confidence); } public class LanguageService { private readonly ILogger logger; public void Detect(float confidence) { Log.LanguageDetectionConfidence(logger, confidence); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class RecommendationEngineWrapper { private readonly ILogger _recLog; public void LogRecommendation(int userId, bool includeSeen) { _recLog.LogTrace("Recommendation for user {UserId}. Include seen: {IncludeSeen}", userId, includeSeen); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 98, Level = LogLevel.Trace, Message = "Recommendation for user {UserId}. Include seen: {IncludeSeen}")] public static partial void RecommendationLog(ILogger logger, int userId, bool includeSeen); } public class RecommendationEngineWrapper { private readonly ILogger _recLog; public void LogRecommendation(int userId, bool includeSeen) { Log.RecommendationLog(_recLog, userId, includeSeen); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CustomEventLogger { private readonly ILogger logger; public void Log(string eventName, int eventId) { logger.LogInformation("Event: {EventName}, ID: {EventId}", eventName, eventId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 99, Level = LogLevel.Information, Message = "Event: {EventName}, ID: {EventId}")] public static partial void CustomEventLog(ILogger logger, string eventName, int eventId); } public class CustomEventLogger { private readonly ILogger logger; public void Log(string eventName, int eventId) { Log.CustomEventLog(logger, eventName, eventId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class UdpListenerService { private readonly ILogger _listenerLog; public void Listen(int port) { _listenerLog.LogInformation("Listening on port {Port}", port); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 100, Level = LogLevel.Information, Message = "Listening on port {Port}")] public static partial void UdpListenerStarting(ILogger logger, int port); } public class UdpListenerService { private readonly ILogger _listenerLog; public void Listen(int port) { Log.UdpListenerStarting(_listenerLog, port); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class WorkflowHost { private readonly ILogger _hostLogger; public void Start(Guid workflowId, int initialState) { _hostLogger.LogInformation("Starting workflow {WorkflowId} from state {InitialState}", workflowId, initialState); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 126, Level = LogLevel.Information, Message = "Starting workflow {WorkflowId} from state {InitialState}")] public static partial void StartingWorkflow(ILogger logger, Guid workflowId, int initialState); } public class WorkflowHost { private readonly ILogger _hostLogger; public void Start(Guid workflowId, int initialState) { Log.StartingWorkflow(_hostLogger, workflowId, initialState); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class BillingService { private readonly ILogger<BillingService> _billingLog; public void GenerateInvoice(int customerId, decimal amount) { _billingLog.LogDebug("Generating invoice for customer {CustomerId}. Amount: {Amount}", customerId, amount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 127, Level = LogLevel.Debug, Message = "Generating invoice for customer {CustomerId}. Amount: {Amount}")] public static partial void GeneratingInvoice(ILogger logger, int customerId, decimal amount); } public class BillingService { private readonly ILogger<BillingService> _billingLog; public void GenerateInvoice(int customerId, decimal amount) { Log.GeneratingInvoice(_billingLog, customerId, amount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class MatchmakingService { private readonly ILogger _matchLog; public void FindMatch(int playerId, int skillRating) { _matchLog.LogTrace("Finding match for player {PlayerId} with rating {SkillRating}", playerId, skillRating); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 128, Level = LogLevel.Trace, Message = "Finding match for player {PlayerId} with rating {SkillRating}")] public static partial void FindingMatch(ILogger logger, int playerId, int skillRating); } public class MatchmakingService { private readonly ILogger _matchLog; public void FindMatch(int playerId, int skillRating) { Log.FindingMatch(_matchLog, playerId, skillRating); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class NotificationDispatcher { private readonly ILogger<NotificationDispatcher> log; public void Dispatch(Guid notificationId, bool isUrgent) { log.LogInformation("Dispatching notification {NotificationId}. Urgent: {IsUrgent}", notificationId, isUrgent); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 129, Level = LogLevel.Information, Message = "Dispatching notification {NotificationId}. Urgent: {IsUrgent}")] public static partial void DispatchingNotification(ILogger logger, Guid notificationId, bool isUrgent); } public class NotificationDispatcher { private readonly ILogger<NotificationDispatcher> log; public void Dispatch(Guid notificationId, bool isUrgent) { Log.DispatchingNotification(log, notificationId, isUrgent); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class LocalizationProvider { private readonly ILogger _logger; public void LoadLanguage(string languageCode, int resourceCount) { _logger.LogInformation("Loading language {LanguageCode} with {ResourceCount} resources.", languageCode, resourceCount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 130, Level = LogLevel.Information, Message = "Loading language {LanguageCode} with {ResourceCount} resources.")] public static partial void LoadingLanguage(ILogger logger, string languageCode, int resourceCount); } public class LocalizationProvider { private readonly ILogger _logger; public void LoadLanguage(string languageCode, int resourceCount) { Log.LoadingLanguage(_logger, languageCode, resourceCount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class MetricsCollector { private readonly ILogger _metrics; public void Collect(string metricName, double value) { _metrics.LogTrace("Collected metric '{MetricName}' with value {Value}", metricName, value); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 131, Level = LogLevel.Trace, Message = "Collected metric '{MetricName}' with value {Value}")] public static partial void MetricCollected(ILogger logger, string metricName, double value); } public class MetricsCollector { private readonly ILogger _metrics; public void Collect(string metricName, double value) { Log.MetricCollected(_metrics, metricName, value); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CommandHandler { private readonly ILogger<CommandHandler> log; public void Handle(int commandId, Guid correlationId) { log.LogDebug("Handling command {CommandId} with correlation ID {CorrelationId}", commandId, correlationId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 132, Level = LogLevel.Debug, Message = "Handling command {CommandId} with correlation ID {CorrelationId}")] public static partial void HandlingCommand(ILogger logger, int commandId, Guid correlationId); } public class CommandHandler { private readonly ILogger<CommandHandler> log; public void Handle(int commandId, Guid correlationId) { Log.HandlingCommand(log, commandId, correlationId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class EventStore { private readonly ILogger _storeLog; public void Append(string streamId, long eventVersion) { _storeLog.LogInformation("Appending to stream {StreamId}. New version: {EventVersion}", streamId, eventVersion); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 133, Level = LogLevel.Information, Message = "Appending to stream {StreamId}. New version: {EventVersion}")] public static partial void AppendingToStream(ILogger logger, string streamId, long eventVersion); } public class EventStore { private readonly ILogger _storeLog; public void Append(string streamId, long eventVersion) { Log.AppendingToStream(_storeLog, streamId, eventVersion); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class RateLimiter { private readonly ILogger logger; public void Check(string clientId, int requestCount) { logger.LogWarning("Rate limit check for client {ClientId}. Request count: {RequestCount}", clientId, requestCount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 134, Level = LogLevel.Warning, Message = "Rate limit check for client {ClientId}. Request count: {RequestCount}")] public static partial void RateLimitCheck(ILogger logger, string clientId, int requestCount); } public class RateLimiter { private readonly ILogger logger; public void Check(string clientId, int requestCount) { Log.RateLimitCheck(logger, clientId, requestCount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SnapshotCreator { private readonly ILogger _snapshotLog; public void Create(Guid aggregateId, int version) { _snapshotLog.LogError("Failed to create snapshot for aggregate {AggregateId} at version {Version}", aggregateId, version); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 135, Level = LogLevel.Error, Message = "Failed to create snapshot for aggregate {AggregateId} at version {Version}")] public static partial void SnapshotCreationFailed(ILogger logger, Guid aggregateId, int version); } public class SnapshotCreator { private readonly ILogger _snapshotLog; public void Create(Guid aggregateId, int version) { Log.SnapshotCreationFailed(_snapshotLog, aggregateId, version); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class PluginLoader { private readonly ILogger log; public void Load(string pluginName, Version pluginVersion) { log.LogInformation("Loading plugin {PluginName} version {PluginVersion}", pluginName, pluginVersion); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 136, Level = LogLevel.Information, Message = "Loading plugin {PluginName} version {PluginVersion}")] public static partial void LoadingPlugin(ILogger logger, string pluginName, Version pluginVersion); } public class PluginLoader { private readonly ILogger log; public void Load(string pluginName, Version pluginVersion) { Log.LoadingPlugin(log, pluginName, pluginVersion); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AssetValidator { private readonly ILogger _validationLog; public void Validate(long assetId, bool isValid) { _validationLog.LogTrace("Validation for asset {AssetId} passed: {IsValid}", assetId, isValid); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 137, Level = LogLevel.Trace, Message = "Validation for asset {AssetId} passed: {IsValid}")] public static partial void AssetValidation(ILogger logger, long assetId, bool isValid); } public class AssetValidator { private readonly ILogger _validationLog; public void Validate(long assetId, bool isValid) { Log.AssetValidation(_validationLog, assetId, isValid); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class StreamProcessor { private readonly ILogger _streamLogger; public void Process(Guid streamId, long messageCount) { _streamLogger.LogDebug("Processing stream {StreamId} with {MessageCount} messages.", streamId, messageCount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 138, Level = LogLevel.Debug, Message = "Processing stream {StreamId} with {MessageCount} messages.")] public static partial void ProcessingStream(ILogger logger, Guid streamId, long messageCount); } public class StreamProcessor { private readonly ILogger _streamLogger; public void Process(Guid streamId, long messageCount) { Log.ProcessingStream(_streamLogger, streamId, messageCount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CampaignManager { private readonly ILogger<CampaignManager> _logger; public void Launch(int campaignId, DateTime launchDate) { _logger.LogInformation("Launching campaign {CampaignId} on {LaunchDate}", campaignId, launchDate); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 139, Level = LogLevel.Information, Message = "Launching campaign {CampaignId} on {LaunchDate}")] public static partial void LaunchingCampaign(ILogger logger, int campaignId, DateTime launchDate); } public class CampaignManager { private readonly ILogger<CampaignManager> _logger; public void Launch(int campaignId, DateTime launchDate) { Log.LaunchingCampaign(_logger, campaignId, launchDate); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class DeviceConnector { private readonly ILogger _log; public void Connect(int deviceId, bool isConnected) { _log.LogWarning("Device {DeviceId} connection status: {IsConnected}", deviceId, isConnected); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 140, Level = LogLevel.Warning, Message = "Device {DeviceId} connection status: {IsConnected}")] public static partial void DeviceConnectionStatus(ILogger logger, int deviceId, bool isConnected); } public class DeviceConnector { private readonly ILogger _log; public void Connect(int deviceId, bool isConnected) { Log.DeviceConnectionStatus(_log, deviceId, isConnected); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class OrderProcessor { private readonly ILogger<OrderProcessor> _logger; public void Process(int orderId) { _logger.LogInformation("Processing order with ID: {OrderId}", orderId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 1, Level = LogLevel.Information, Message = "Processing order with ID: {OrderId}")] public static partial void ProcessingOrder(ILogger logger, int orderId); } public class OrderProcessor { private readonly ILogger<OrderProcessor> _logger; public void Process(int orderId) { Log.ProcessingOrder(_logger, orderId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class UserAuthenticator { private readonly ILogger<UserAuthenticator> _logger; public void Authenticate(Guid userId, bool isSuccess) { _logger.LogWarning("Authentication for {UserId} resulted in Success: {IsSuccess}", userId, isSuccess); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 2, Level = LogLevel.Warning, Message = "Authentication for {UserId} resulted in Success: {IsSuccess}")] public static partial void AuthenticationResult(ILogger logger, Guid userId, bool isSuccess); } public class UserAuthenticator { private readonly ILogger<UserAuthenticator> _logger; public void Authenticate(Guid userId, bool isSuccess) { Log.AuthenticationResult(_logger, userId, isSuccess); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class PaymentGateway { private readonly ILogger<PaymentGateway> _logger; public void Process(decimal amount) { _logger.LogError("Payment failed with amount {Amount}", amount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 3, Level = LogLevel.Error, Message = "Payment failed with amount {Amount}")] public static partial void PaymentFailed(ILogger logger, decimal amount); } public class PaymentGateway { private readonly ILogger<PaymentGateway> _logger; public void Process(decimal amount) { Log.PaymentFailed(_logger, amount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SystemLogger { private readonly ILogger _logger; public SystemLogger(ILogger logger) { _logger = logger; } public void LogSyncComplete(long recordCount, TimeSpan duration) { _logger.LogDebug("Sync completed. {RecordCount} records in {DurationMs}ms.", recordCount, duration.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 4, Level = LogLevel.Debug, Message = "Sync completed. {RecordCount} records in {DurationMs}ms.")] public static partial void SyncCompleted(ILogger logger, long recordCount, double durationMs); } public class SystemLogger { private readonly ILogger _logger; public SystemLogger(ILogger logger) { _logger = logger; } public void LogSyncComplete(long recordCount, TimeSpan duration) { Log.SyncCompleted(_logger, recordCount, duration.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public enum ItemStatus { InStock, OutOfStock } public class InventoryManager { private readonly ILogger<InventoryManager> _logger; public void UpdateStock(int productId, ItemStatus status) { _logger.LogTrace("Updating stock for product {ProductId} to {Status}.", productId, status); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public enum ItemStatus { InStock, OutOfStock } public static partial class Log { [LoggerMessage(EventId = 5, Level = LogLevel.Trace, Message = "Updating stock for product {ProductId} to {Status}.")] public static partial void UpdateStockStatus(ILogger logger, int productId, ItemStatus status); } public class InventoryManager { private readonly ILogger<InventoryManager> _logger; public void UpdateStock(int productId, ItemStatus status) { Log.UpdateStockStatus(_logger, productId, status); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ReportGenerator { private readonly ILogger<ReportGenerator> _logger; public void Generate(Guid reportId, DateTime generatedAt) { _logger.LogInformation("Generated report {ReportId} at {GeneratedAt}", reportId, generatedAt); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 6, Level = LogLevel.Information, Message = "Generated report {ReportId} at {GeneratedAt}")] public static partial void ReportGenerated(ILogger logger, Guid reportId, DateTime generatedAt); } public class ReportGenerator { private readonly ILogger<ReportGenerator> _logger; public void Generate(Guid reportId, DateTime generatedAt) { Log.ReportGenerated(_logger, reportId, generatedAt); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class FileProcessor { private readonly ILogger<FileProcessor> _logger; public void Process(long fileSize, bool isReadOnly) { _logger.LogDebug("File Size: {FileSize}, ReadOnly: {IsReadOnly}", fileSize, isReadOnly); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 7, Level = LogLevel.Debug, Message = "File Size: {FileSize}, ReadOnly: {IsReadOnly}")] public static partial void ProcessingFile(ILogger logger, long fileSize, bool isReadOnly); } public class FileProcessor { private readonly ILogger<FileProcessor> _logger; public void Process(long fileSize, bool isReadOnly) { Log.ProcessingFile(_logger, fileSize, isReadOnly); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ApiController { private readonly ILogger<ApiController> _logger; public void HandleRequest(string endpointName) { _logger.LogInformation("Handled request for endpoint {EndpointName}", endpointName); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 8, Level = LogLevel.Information, Message = "Handled request for endpoint {EndpointName}")] public static partial void RequestHandled(ILogger logger, string endpointName); } public class ApiController { private readonly ILogger<ApiController> _logger; public void HandleRequest(string endpointName) { Log.RequestHandled(_logger, endpointName); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SecurityWrapper { private readonly ILogger _logger; public SecurityWrapper(ILogger logger) { _logger = logger; } public void LogTokenValidation(Guid tokenId, DateTime expiry) { _logger.LogWarning("Token {TokenId} nearing expiration at {Expiry}.", tokenId, expiry); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 9, Level = LogLevel.Warning, Message = "Token {TokenId} nearing expiration at {Expiry}.")] public static partial void TokenExpiring(ILogger logger, Guid tokenId, DateTime expiry); } public class SecurityWrapper { private readonly ILogger _logger; public SecurityWrapper(ILogger logger) { _logger = logger; } public void LogTokenValidation(Guid tokenId, DateTime expiry) { Log.TokenExpiring(_logger, tokenId, expiry); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public struct Point { public int X, Y; } public class GeometryEngine { private readonly ILogger<GeometryEngine> _logger; public void Process(Point p) { _logger.LogTrace("Processing point at ({X}, {Y})", p.X, p.Y); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public struct Point { public int X, Y; } public static partial class Log { [LoggerMessage(EventId = 10, Level = LogLevel.Trace, Message = "Processing point at ({X}, {Y})")] public static partial void ProcessingPoint(ILogger logger, int x, int y); } public class GeometryEngine { private readonly ILogger<GeometryEngine> _logger; public void Process(Point p) { Log.ProcessingPoint(_logger, p.X, p.Y); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class EventPublisher { private readonly ILogger<EventPublisher> _logger; public void Publish(long partitionKey) { _logger.LogInformation("Publishing to partition {PartitionKey}.", partitionKey); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 11, Level = LogLevel.Information, Message = "Publishing to partition {PartitionKey}.")] public static partial void PublishingEvent(ILogger logger, long partitionKey); } public class EventPublisher { private readonly ILogger<EventPublisher> _logger; public void Publish(long partitionKey) { Log.PublishingEvent(_logger, partitionKey); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class TaskScheduler { private readonly ILogger<TaskScheduler> _logger; public void Schedule(DateTimeOffset runAt, bool isRecurring) { _logger.LogDebug("Scheduled to run at {RunAt}. Recurring: {IsRecurring}", runAt, isRecurring); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 12, Level = LogLevel.Debug, Message = "Scheduled to run at {RunAt}. Recurring: {IsRecurring}")] public static partial void TaskScheduled(ILogger logger, DateTimeOffset runAt, bool isRecurring); } public class TaskScheduler { private readonly ILogger<TaskScheduler> _logger; public void Schedule(DateTimeOffset runAt, bool isRecurring) { Log.TaskScheduled(_logger, runAt, isRecurring); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class MessageQueueConsumer { private readonly ILogger<MessageQueueConsumer> _logger; public void Consume(long messageId) { _logger.LogError("Failed to process message {MessageId}", messageId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 13, Level = LogLevel.Error, Message = "Failed to process message {MessageId}")] public static partial void MessageProcessingFailed(ILogger logger, long messageId); } public class MessageQueueConsumer { private readonly ILogger<MessageQueueConsumer> _logger; public void Consume(long messageId) { Log.MessageProcessingFailed(_logger, messageId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ConfigHelper { private readonly ILogger<ConfigHelper> _logger; public void Load(int? version) { _logger.LogInformation("Loading config version {Version}", version); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 14, Level = LogLevel.Information, Message = "Loading config version {Version}")] public static partial void LoadingConfiguration(ILogger logger, int? version); } public class ConfigHelper { private readonly ILogger<ConfigHelper> _logger; public void Load(int? version) { Log.LoadingConfiguration(_logger, version); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class HealthChecker { private readonly ILogger<HealthChecker> _logger; public void Report(bool isHealthy, short responseTime) { _logger.LogWarning("Health: Healthy={IsHealthy}, ResponseTime={ResponseTime}ms", isHealthy, responseTime); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 15, Level = LogLevel.Warning, Message = "Health: Healthy={IsHealthy}, ResponseTime={ResponseTime}ms")] public static partial void HealthCheckResult(ILogger logger, bool isHealthy, short responseTime); } public class HealthChecker { private readonly ILogger<HealthChecker> _logger; public void Report(bool isHealthy, short responseTime) { Log.HealthCheckResult(_logger, isHealthy, responseTime); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SessionManager { private readonly ILogger<SessionManager> _logger; public void Create(Guid sessionId, char sessionType) { _logger.LogInformation("Session {SessionId} of type {SessionType} created.", sessionId, sessionType); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 16, Level = LogLevel.Information, Message = "Session {SessionId} of type {SessionType} created.")] public static partial void SessionCreated(ILogger logger, Guid sessionId, char sessionType); } public class SessionManager { private readonly ILogger<SessionManager> _logger; public void Create(Guid sessionId, char sessionType) { Log.SessionCreated(_logger, sessionId, sessionType); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class DatabaseMigrator { private readonly ILogger<DatabaseMigrator> _logger; public void Migrate(int version, string description) { _logger.LogError("Failed to migrate to version {Version} ({Description})", version, description); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 17, Level = LogLevel.Error, Message = "Failed to migrate to version {Version} ({Description})")] public static partial void MigrationFailed(ILogger logger, int version, string description); } public class DatabaseMigrator { private readonly ILogger<DatabaseMigrator> _logger; public void Migrate(int version, string description) { Log.MigrationFailed(_logger, version, description); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ImageResizer { private readonly ILogger<ImageResizer> _logger; public void Resize(ushort width, ushort height) { _logger.LogDebug("Resizing to {Width}x{Height}.", width, height); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 18, Level = LogLevel.Debug, Message = "Resizing to {Width}x{Height}.")] public static partial void ResizingImage(ILogger logger, ushort width, ushort height); } public class ImageResizer { private readonly ILogger<ImageResizer> _logger; public void Resize(ushort width, ushort height) { Log.ResizingImage(_logger, width, height); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class NotificationService { private readonly ILogger<NotificationService> _logger; public void Send(byte notificationType, int userId) { _logger.LogInformation("Sending type {NotificationType} to user {UserId}", notificationType, userId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 19, Level = LogLevel.Information, Message = "Sending type {NotificationType} to user {UserId}")] public static partial void SendingNotification(ILogger logger, byte notificationType, int userId); } public class NotificationService { private readonly ILogger<NotificationService> _logger; public void Send(byte notificationType, int userId) { Log.SendingNotification(_logger, notificationType, userId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ProductCatalog { private readonly ILogger<ProductCatalog> _logger; public void GetProduct(int productId, Guid? versionId) { _logger.LogTrace("Fetching product {ProductId} with version {VersionId}.", productId, versionId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 20, Level = LogLevel.Trace, Message = "Fetching product {ProductId} with version {VersionId}.")] public static partial void FetchingProduct(ILogger logger, int productId, Guid? versionId); } public class ProductCatalog { private readonly ILogger<ProductCatalog> _logger; public void GetProduct(int productId, Guid? versionId) { Log.FetchingProduct(_logger, productId, versionId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SearchIndexer { private readonly ILogger<SearchIndexer> _logger; public void Index(long documentId, DateTime indexedAt) { _logger.LogInformation("Indexing document {DocumentId} at {IndexedAt}", documentId, indexedAt); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 21, Level = LogLevel.Information, Message = "Indexing document {DocumentId} at {IndexedAt}")] public static partial void IndexingDocument(ILogger logger, long documentId, DateTime indexedAt); } public class SearchIndexer { private readonly ILogger<SearchIndexer> _logger; public void Index(long documentId, DateTime indexedAt) { Log.IndexingDocument(_logger, documentId, indexedAt); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class JobRunnerWrapper { private readonly ILogger _logger; public JobRunnerWrapper(ILogger logger) { _logger = logger; } public void Run(Guid jobId, sbyte priority) { _logger.LogDebug("Running job {JobId} with priority {Priority}.", jobId, priority); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 22, Level = LogLevel.Debug, Message = "Running job {JobId} with priority {Priority}.")] public static partial void RunningJob(ILogger logger, Guid jobId, sbyte priority); } public class JobRunnerWrapper { private readonly ILogger _logger; public JobRunnerWrapper(ILogger logger) { _logger = logger; } public void Run(Guid jobId, sbyte priority) { Log.RunningJob(_logger, jobId, priority); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AuditLogger { private readonly ILogger<AuditLogger> _logger; public void LogAction(int userId, ulong permissions) { _logger.LogInformation("User {UserId} has permissions {Permissions}.", userId, permissions); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 23, Level = LogLevel.Information, Message = "User {UserId} has permissions {Permissions}.")] public static partial void UserAction(ILogger logger, int userId, ulong permissions); } public class AuditLogger { private readonly ILogger<AuditLogger> _logger; public void LogAction(int userId, ulong permissions) { Log.UserAction(_logger, userId, permissions); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ConnectionManager { private readonly ILogger<ConnectionManager> _logger; public void Connect(string host, uint port) { _logger.LogWarning("Connection to {Host}:{Port} failed.", host, port); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 24, Level = LogLevel.Warning, Message = "Connection to {Host}:{Port} failed.")] public static partial void ConnectionFailed(ILogger logger, string host, uint port); } public class ConnectionManager { private readonly ILogger<ConnectionManager> _logger; public void Connect(string host, uint port) { Log.ConnectionFailed(_logger, host, port); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class BackupService { private readonly ILogger<BackupService> _logger; public void StartBackup(string volumeName) { _logger.LogInformation("Starting backup for volume {VolumeName}.", volumeName); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 25, Level = LogLevel.Information, Message = "Starting backup for volume {VolumeName}.")] public static partial void BackupStarting(ILogger logger, string volumeName); } public class BackupService { private readonly ILogger<BackupService> _logger; public void StartBackup(string volumeName) { Log.BackupStarting(_logger, volumeName); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AssetBundleLoader { private readonly ILogger _log; public void Load(string bundleName, uint crc) { _log.LogInformation("Loading asset bundle {BundleName} with CRC {Crc}", bundleName, crc); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 51, Level = LogLevel.Information, Message = "Loading asset bundle {BundleName} with CRC {Crc}")] public static partial void LoadingAssetBundle(ILogger logger, string bundleName, uint crc); } public class AssetBundleLoader { private readonly ILogger _log; public void Load(string bundleName, uint crc) { Log.LoadingAssetBundle(_log, bundleName, crc); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ApiGateway { private readonly ILogger _telemetry; public void LogRequest(string path, TimeSpan latency) { _telemetry.LogInformation("Request to {Path} completed in {LatencyMs}ms.", path, latency.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 52, Level = LogLevel.Information, Message = "Request to {Path} completed in {LatencyMs}ms.")] public static partial void RequestCompleted(ILogger logger, string path, double latencyMs); } public class ApiGateway { private readonly ILogger _telemetry; public void LogRequest(string path, TimeSpan latency) { Log.RequestCompleted(_telemetry, path, latency.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ServiceBusPublisher { private readonly ILogger log; public void Publish(Guid messageId, int size) { log.LogDebug("Publishing message {MessageId}. Size: {Size} bytes", messageId, size); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 53, Level = LogLevel.Debug, Message = "Publishing message {MessageId}. Size: {Size} bytes")] public static partial void PublishingMessage(ILogger logger, Guid messageId, int size); } public class ServiceBusPublisher { private readonly ILogger log; public void Publish(Guid messageId, int size) { Log.PublishingMessage(log, messageId, size); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class FileSystemMonitor { private readonly ILogger _eventLog; public void OnChanged(WatcherChangeTypes changeType) { _eventLog.LogWarning("File system change detected. Type: {ChangeType}.", changeType); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 54, Level = LogLevel.Warning, Message = "File system change detected. Type: {ChangeType}.")] public static partial void FileSystemChanged(ILogger logger, WatcherChangeTypes changeType); } public class FileSystemMonitor { private readonly ILogger _eventLog; public void OnChanged(WatcherChangeTypes changeType) { Log.FileSystemChanged(_eventLog, changeType); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SpellcheckService { private readonly ILogger logger; public void Check(int wordCount, bool success) { logger.LogTrace("Spellcheck for {WordCount} words succeeded: {Success}", wordCount, success); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 55, Level = LogLevel.Trace, Message = "Spellcheck for {WordCount} words succeeded: {Success}")] public static partial void SpellcheckComplete(ILogger logger, int wordCount, bool success); } public class SpellcheckService { private readonly ILogger logger; public void Check(int wordCount, bool success) { Log.SpellcheckComplete(logger, wordCount, success); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AccessControlService { private readonly ILogger _securityLogger; public void CheckAccess(int userId, bool isGranted) { _securityLogger.LogError("Access for user {UserId} was granted: {IsGranted}", userId, isGranted); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 56, Level = LogLevel.Error, Message = "Access for user {UserId} was granted: {IsGranted}")] public static partial void AccessCheck(ILogger logger, int userId, bool isGranted); } public class AccessControlService { private readonly ILogger _securityLogger; public void CheckAccess(int userId, bool isGranted) { Log.AccessCheck(_securityLogger, userId, isGranted); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class DataCompressionService { private readonly ILogger _perfLogger; public void Compress(long originalSize, short level) { _perfLogger.LogDebug("Compressed from {OriginalSize} at level {Level}.", originalSize, level); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 57, Level = LogLevel.Debug, Message = "Compressed from {OriginalSize} at level {Level}.")] public static partial void CompressionInfo(ILogger logger, long originalSize, short level); } public class DataCompressionService { private readonly ILogger _perfLogger; public void Compress(long originalSize, short level) { Log.CompressionInfo(_perfLogger, originalSize, level); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class PaymentReconciliationService { private readonly ILogger audit; public void Reconcile(Guid batchId, decimal totalAmount) { audit.LogInformation("Reconciling batch {BatchId} totaling {TotalAmount}.", batchId, totalAmount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 58, Level = LogLevel.Information, Message = "Reconciling batch {BatchId} totaling {TotalAmount}.")] public static partial void Reconciling(ILogger logger, Guid batchId, decimal totalAmount); } public class PaymentReconciliationService { private readonly ILogger audit; public void Reconcile(Guid batchId, decimal totalAmount) { Log.Reconciling(audit, batchId, totalAmount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ObjectSerializer { private readonly ILogger _trace; public void Serialize(int objectId, long size) { _trace.LogTrace("Serializing object {ObjectId}. Size: {Size}", objectId, size); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 59, Level = LogLevel.Trace, Message = "Serializing object {ObjectId}. Size: {Size}")] public static partial void SerializingObject(ILogger logger, int objectId, long size); } public class ObjectSerializer { private readonly ILogger _trace; public void Serialize(int objectId, long size) { Log.SerializingObject(_trace, objectId, size); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class WebCrawler { private readonly ILogger _logger; public void Crawl(int depth, bool allowed) { _logger.LogInformation("Crawling at depth {Depth}. Allowed: {Allowed}", depth, allowed); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 60, Level = LogLevel.Information, Message = "Crawling at depth {Depth}. Allowed: {Allowed}")] public static partial void Crawling(ILogger logger, int depth, bool allowed); } public class WebCrawler { private readonly ILogger _logger; public void Crawl(int depth, bool allowed) { Log.Crawling(_logger, depth, allowed); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class TaskDispatcher { private readonly ILogger _log; public void Dispatch(long taskId, Guid workerId) { _log.LogDebug("Dispatching task {TaskId} to worker {WorkerId}.", taskId, workerId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 61, Level = LogLevel.Debug, Message = "Dispatching task {TaskId} to worker {WorkerId}.")] public static partial void DispatchingTask(ILogger logger, long taskId, Guid workerId); } public class TaskDispatcher { private readonly ILogger _log; public void Dispatch(long taskId, Guid workerId) { Log.DispatchingTask(_log, taskId, workerId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AuthenticationProvider { private readonly ILogger _authLog; public void Validate(bool isValid, int? attempt) { _authLog.LogWarning("Validation was valid: {IsValid}. Attempt: {Attempt}", isValid, attempt); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 62, Level = LogLevel.Warning, Message = "Validation was valid: {IsValid}. Attempt: {Attempt}")] public static partial void ValidationAttempt(ILogger logger, bool isValid, int? attempt); } public class AuthenticationProvider { private readonly ILogger _authLog; public void Validate(bool isValid, int? attempt) { Log.ValidationAttempt(_authLog, isValid, attempt); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CircuitBreaker { private readonly ILogger _logger; public void StateChanged(TimeSpan duration) { _logger.LogError("Circuit changed state for {DurationSeconds} seconds.", duration.TotalSeconds); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 63, Level = LogLevel.Error, Message = "Circuit changed state for {DurationSeconds} seconds.")] public static partial void CircuitStateChanged(ILogger logger, double durationSeconds); } public class CircuitBreaker { private readonly ILogger _logger; public void StateChanged(TimeSpan duration) { Log.CircuitStateChanged(_logger, duration.TotalSeconds); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CacheWarmer { private readonly ILogger FsLogger; public void WarmUp(int itemCount, long memoryUsage) { FsLogger.LogInformation("Warming up cache. Items: {ItemCount}, Memory: {MemoryBytes} bytes.", itemCount, memoryUsage); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 64, Level = LogLevel.Information, Message = "Warming up cache. Items: {ItemCount}, Memory: {MemoryBytes} bytes.")] public static partial void WarmingCache(ILogger logger, int itemCount, long memoryUsage); } public class CacheWarmer { private readonly ILogger FsLogger; public void WarmUp(int itemCount, long memoryUsage) { Log.WarmingCache(FsLogger, itemCount, memoryUsage); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ResourceGovernor { private readonly ILogger logger; public void Throttle(int cpuLimit, int memoryLimit) { logger.LogWarning("Throttling instance. CPU limit: {CpuLimit}%, Memory limit: {MemoryLimit}MB.", cpuLimit, memoryLimit); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 65, Level = LogLevel.Warning, Message = "Throttling instance. CPU limit: {CpuLimit}%, Memory limit: {MemoryLimit}MB.")] public static partial void Throttling(ILogger logger, int cpuLimit, int memoryLimit); } public class ResourceGovernor { private readonly ILogger logger; public void Throttle(int cpuLimit, int memoryLimit) { Log.Throttling(logger, cpuLimit, memoryLimit); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AlertingService { private readonly ILogger _log; public void TriggerAlert(decimal value, decimal threshold) { _log.LogCritical("Value {Value} exceeded threshold {Threshold}", value, threshold); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 66, Level = LogLevel.Critical, Message = "Value {Value} exceeded threshold {Threshold}")] public static partial void AlertTriggered(ILogger logger, decimal value, decimal threshold); } public class AlertingService { private readonly ILogger _log; public void TriggerAlert(decimal value, decimal threshold) { Log.AlertTriggered(_log, value, threshold); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class LoadBalancer { private readonly ILogger _networkLog; public void RouteRequest(long requestId, Guid serverId) { _networkLog.LogTrace("Routing request {RequestId} to server {ServerId}.", requestId, serverId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 67, Level = LogLevel.Trace, Message = "Routing request {RequestId} to server {ServerId}.")] public static partial void RoutingRequest(ILogger logger, long requestId, Guid serverId); } public class LoadBalancer { private readonly ILogger _networkLog; public void RouteRequest(long requestId, Guid serverId) { Log.RoutingRequest(_networkLog, requestId, serverId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class EventDeserializer { private readonly ILogger _logger; public void Deserialize(Guid eventId, bool success) { _logger.LogDebug("Deserialization of event {EventId} was successful: {Success}.", eventId, success); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 68, Level = LogLevel.Debug, Message = "Deserialization of event {EventId} was successful: {Success}.")] public static partial void DeserializationResult(ILogger logger, Guid eventId, bool success); } public class EventDeserializer { private readonly ILogger _logger; public void Deserialize(Guid eventId, bool success) { Log.DeserializationResult(_logger, eventId, success); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class GeoFenceService { private readonly ILogger _geoLog; public void CheckPosition(int deviceId, double latitude) { _geoLog.LogInformation("Checking position for device {DeviceId}: {Latitude}", deviceId, latitude); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 69, Level = LogLevel.Information, Message = "Checking position for device {DeviceId}: {Latitude}")] public static partial void CheckingPosition(ILogger logger, int deviceId, double latitude); } public class GeoFenceService { private readonly ILogger _geoLog; public void CheckPosition(int deviceId, double latitude) { Log.CheckingPosition(_geoLog, deviceId, latitude); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AclManager { private readonly ILogger _logger; public void UpdateAcl(int principalId, string permissions) { _logger.LogWarning("Updating ACL for principal: {PrincipalId} with permissions {Permissions}", principalId, permissions); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 70, Level = LogLevel.Warning, Message = "Updating ACL for principal: {PrincipalId} with permissions {Permissions}")] public static partial void UpdatingAcl(ILogger logger, int principalId, string permissions); } public class AclManager { private readonly ILogger _logger; public void UpdateAcl(int principalId, string permissions) { Log.UpdatingAcl(_logger, principalId, permissions); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class LanguageDetector { private readonly ILogger _logger; public void Detect(Guid textId, float confidence) { _logger.LogDebug("Detected language for text {TextId} with confidence {Confidence}.", textId, confidence); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 71, Level = LogLevel.Debug, Message = "Detected language for text {TextId} with confidence {Confidence}.")] public static partial void LanguageDetected(ILogger logger, Guid textId, float confidence); } public class LanguageDetector { private readonly ILogger _logger; public void Detect(Guid textId, float confidence) { Log.LanguageDetected(_logger, textId, confidence); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class RecommendationEngine { private readonly ILogger _engineLog; public void GetRecommendations(int userId, bool includeSeen) { _engineLog.LogTrace("Getting recommendations for user {UserId}. Include seen: {IncludeSeen}", userId, includeSeen); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 72, Level = LogLevel.Trace, Message = "Getting recommendations for user {UserId}. Include seen: {IncludeSeen}")] public static partial void GettingRecommendations(ILogger logger, int userId, bool includeSeen); } public class RecommendationEngine { private readonly ILogger _engineLog; public void GetRecommendations(int userId, bool includeSeen) { Log.GettingRecommendations(_engineLog, userId, includeSeen); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class LoggerWrapper { private readonly ILogger _baseLogger; public void LogEvent(string eventName, int eventId) { _baseLogger.LogInformation("Event: {EventName}, ID: {EventId}", eventName, eventId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 73, Level = LogLevel.Information, Message = "Event: {EventName}, ID: {EventId}")] public static partial void CustomEvent(ILogger logger, string eventName, int eventId); } public class LoggerWrapper { private readonly ILogger _baseLogger; public void LogEvent(string eventName, int eventId) { Log.CustomEvent(_baseLogger, eventName, eventId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class UdpListener { private readonly ILogger _listenerLog; public void Listen(int port, int bufferSize) { _listenerLog.LogInformation("Listening on port {Port} with buffer size {BufferSize}", port, bufferSize); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 74, Level = LogLevel.Information, Message = "Listening on port {Port} with buffer size {BufferSize}")] public static partial void UdpListening(ILogger logger, int port, int bufferSize); } public class UdpListener { private readonly ILogger _listenerLog; public void Listen(int port, int bufferSize) { Log.UdpListening(_listenerLog, port, bufferSize); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class WorkflowEngine { private readonly ILogger _workflowLogger; public void AdvanceState(Guid workflowId, int currentState, int nextState) { _workflowLogger.LogDebug("Advancing workflow {WorkflowId} from state {CurrentState} to {NextState}", workflowId, currentState, nextState); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 75, Level = LogLevel.Debug, Message = "Advancing workflow {WorkflowId} from state {CurrentState} to {NextState}")] public static partial void AdvancingWorkflow(ILogger logger, Guid workflowId, int currentState, int nextState); } public class WorkflowEngine { private readonly ILogger _workflowLogger; public void AdvanceState(Guid workflowId, int currentState, int nextState) { Log.AdvancingWorkflow(_workflowLogger, workflowId, currentState, nextState); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class UserProfileUpdater { private readonly ILogger _log; public void UpdateAge(int userId, int age) { _log.LogError("Failed to update age for user {UserId} to {Age}", userId, age); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 76, Level = LogLevel.Error, Message = "Failed to update age for user {UserId} to {Age}")] public static partial void ProfileAgeUpdateFailed(ILogger logger, int userId, int age); } public class UserProfileUpdater { private readonly ILogger _log; public void UpdateAge(int userId, int age) { Log.ProfileAgeUpdateFailed(_log, userId, age); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AssetBundleManager { private readonly ILogger logger; public void Load(uint crc, long offset) { logger.LogInformation("Loading asset bundle with CRC {Crc} from offset {Offset}", crc, offset); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 77, Level = LogLevel.Information, Message = "Loading asset bundle with CRC {Crc} from offset {Offset}")] public static partial void LoadingAssetBundleWithOffset(ILogger logger, uint crc, long offset); } public class AssetBundleManager { private readonly ILogger logger; public void Load(uint crc, long offset) { Log.LoadingAssetBundleWithOffset(logger, crc, offset); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ApiGatewayLogger { private readonly ILogger _internalLogger; public void LogRequest(int statusCode, TimeSpan latency) { _internalLogger.LogInformation("Request completed with status {StatusCode} in {LatencyMs}ms.", statusCode, latency.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 78, Level = LogLevel.Information, Message = "Request completed with status {StatusCode} in {LatencyMs}ms.")] public static partial void RequestCompletedWithStatus(ILogger logger, int statusCode, double latencyMs); } public class ApiGatewayLogger { private readonly ILogger _internalLogger; public void LogRequest(int statusCode, TimeSpan latency) { Log.RequestCompletedWithStatus(_internalLogger, statusCode, latency.TotalMilliseconds); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class ServiceBusMessagePublisher { private readonly ILogger _publisherLog; public void Publish(string topicName, int size) { _publisherLog.LogDebug("Publishing to topic '{TopicName}'. Size: {Size} bytes", topicName, size); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 79, Level = LogLevel.Debug, Message = "Publishing to topic '{TopicName}'. Size: {Size} bytes")] public static partial void PublishingToTopic(ILogger logger, string topicName, int size); } public class ServiceBusMessagePublisher { private readonly ILogger _publisherLog; public void Publish(string topicName, int size) { Log.PublishingToTopic(_publisherLog, topicName, size); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class FileWatcherService { private readonly ILogger FSLogger; public void OnError(int errorCode) { FSLogger.LogCritical("File watcher failed with error code: {ErrorCode}.", errorCode); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 80, Level = LogLevel.Critical, Message = "File watcher failed with error code: {ErrorCode}.")] public static partial void FileWatcherFailed(ILogger logger, int errorCode); } public class FileWatcherService { private readonly ILogger FSLogger; public void OnError(int errorCode) { Log.FileWatcherFailed(FSLogger, errorCode); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class TextAnalysisService { private readonly ILogger _analysisLogger; public void Analyze(int wordCount, bool isProfane) { _analysisLogger.LogTrace("Analyzed {WordCount} words. Profanity detected: {IsProfane}", wordCount, isProfane); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 81, Level = LogLevel.Trace, Message = "Analyzed {WordCount} words. Profanity detected: {IsProfane}")] public static partial void AnalysisComplete(ILogger logger, int wordCount, bool isProfane); } public class TextAnalysisService { private readonly ILogger _analysisLogger; public void Analyze(int wordCount, bool isProfane) { Log.AnalysisComplete(_analysisLogger, wordCount, isProfane); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class PermissionService { private readonly ILogger _securityLog; public void GrantPermission(string principal, int permissionLevel) { _securityLog.LogError("Granting permission level {PermissionLevel} to principal {Principal}", permissionLevel, principal); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 82, Level = LogLevel.Error, Message = "Granting permission level {PermissionLevel} to principal {Principal}")] public static partial void GrantingPermission(ILogger logger, int permissionLevel, string principal); } public class PermissionService { private readonly ILogger _securityLog; public void GrantPermission(string principal, int permissionLevel) { Log.GrantingPermission(_securityLog, permissionLevel, principal); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class DecompressionUnit { private readonly ILogger _unitLogger; public void Decompress(long originalSize, short algorithmId) { _unitLogger.LogDebug("Decompressing from {OriginalSize} using algorithm {AlgorithmId}.", originalSize, algorithmId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 83, Level = LogLevel.Debug, Message = "Decompressing from {OriginalSize} using algorithm {AlgorithmId}.")] public static partial void DecompressionInfo(ILogger logger, long originalSize, short algorithmId); } public class DecompressionUnit { private readonly ILogger _unitLogger; public void Decompress(long originalSize, short algorithmId) { Log.DecompressionInfo(_unitLogger, originalSize, algorithmId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AuditWrapper { private readonly ILogger _audit; public void Log(Guid batchId, string result) { _audit.LogInformation("Audit batch {BatchId} resulted in {Result}.", batchId, result); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 84, Level = LogLevel.Information, Message = "Audit batch {BatchId} resulted in {Result}.")] public static partial void AuditResult(ILogger logger, Guid batchId, string result); } public class AuditWrapper { private readonly ILogger _audit; public void Log(Guid batchId, string result) { Log.AuditResult(_audit, batchId, result); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SerializationManager { private readonly ILogger _log; public void LogTrace(int objectId, long size) { _log.LogTrace("Object {ObjectId}. Size: {Size}", objectId, size); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 85, Level = LogLevel.Trace, Message = "Object {ObjectId}. Size: {Size}")] public static partial void SerializingObjectTrace(ILogger logger, int objectId, long size); } public class SerializationManager { private readonly ILogger _log; public void LogTrace(int objectId, long size) { Log.SerializingObjectTrace(_log, objectId, size); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class UrlScanner { private readonly ILogger<UrlScanner> _logger; public void Scan(int depth, bool isAllowed) { _logger.LogInformation("Scanning at depth {Depth}. Allowed: {IsAllowed}", depth, isAllowed); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 86, Level = LogLevel.Information, Message = "Scanning at depth {Depth}. Allowed: {IsAllowed}")] public static partial void ScanningUrl(ILogger logger, int depth, bool isAllowed); } public class UrlScanner { private readonly ILogger<UrlScanner> _logger; public void Scan(int depth, bool isAllowed) { Log.ScanningUrl(_logger, depth, isAllowed); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class WorkerDispatcher { private readonly ILogger _dispatcherLog; public void Dispatch(long taskId, Guid workerId) { _dispatcherLog.LogDebug("Dispatching task {TaskId} to worker {WorkerId}.", taskId, workerId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 87, Level = LogLevel.Debug, Message = "Dispatching task {TaskId} to worker {WorkerId}.")] public static partial void DispatchingWorkerTask(ILogger logger, long taskId, Guid workerId); } public class WorkerDispatcher { private readonly ILogger _dispatcherLog; public void Dispatch(long taskId, Guid workerId) { Log.DispatchingWorkerTask(_dispatcherLog, taskId, workerId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CredentialValidator { private readonly ILogger log; public void Validate(string username, int? attemptCount) { log.LogWarning("Validation for '{Username}' on attempt {AttemptCount}", username, attemptCount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 88, Level = LogLevel.Warning, Message = "Validation for '{Username}' on attempt {AttemptCount}")] public static partial void ValidationCredentialAttempt(ILogger logger, string username, int? attemptCount); } public class CredentialValidator { private readonly ILogger log; public void Validate(string username, int? attemptCount) { Log.ValidationCredentialAttempt(log, username, attemptCount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CircuitStateManager { private readonly ILogger logger; public void ChangeState(string circuitName) { logger.LogError("Circuit '{CircuitName}' changed state.", circuitName); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 89, Level = LogLevel.Error, Message = "Circuit '{CircuitName}' changed state.")] public static partial void CircuitStateChanged(ILogger logger, string circuitName); } public class CircuitStateManager { private readonly ILogger logger; public void ChangeState(string circuitName) { Log.CircuitStateChanged(logger, circuitName); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CacheInitializer { private readonly ILogger _log; public void Initialize(int itemCount, long memoryUsage) { _log.LogInformation("Initializing cache. Items: {ItemCount}, Memory: {MemoryBytes} bytes.", itemCount, memoryUsage); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 90, Level = LogLevel.Information, Message = "Initializing cache. Items: {ItemCount}, Memory: {MemoryBytes} bytes.")] public static partial void InitializingCache(ILogger logger, int itemCount, long memoryUsage); } public class CacheInitializer { private readonly ILogger _log; public void Initialize(int itemCount, long memoryUsage) { Log.InitializingCache(_log, itemCount, memoryUsage); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class Governor { private readonly ILogger<Governor> _governorLog; public void Throttle(int cpuLimit) { _governorLog.LogWarning("Throttling instance. CPU limit: {CpuLimit}%.", cpuLimit); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 91, Level = LogLevel.Warning, Message = "Throttling instance. CPU limit: {CpuLimit}%.")] public static partial void ThrottlingCpu(ILogger logger, int cpuLimit); } public class Governor { private readonly ILogger<Governor> _governorLog; public void Throttle(int cpuLimit) { Log.ThrottlingCpu(_governorLog, cpuLimit); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AlertManager { private readonly ILogger log; public void Trigger(decimal threshold) { log.LogCritical("Threshold {Threshold} exceeded", threshold); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 92, Level = LogLevel.Critical, Message = "Threshold {Threshold} exceeded")] public static partial void ThresholdExceeded(ILogger logger, decimal threshold); } public class AlertManager { private readonly ILogger log; public void Trigger(decimal threshold) { Log.ThresholdExceeded(log, threshold); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class RequestRouter { private readonly ILogger _routerLog; public void Route(long requestId, Guid serverId) { _routerLog.LogTrace("Routing request {RequestId} to server {ServerId}.", requestId, serverId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 93, Level = LogLevel.Trace, Message = "Routing request {RequestId} to server {ServerId}.")] public static partial void RoutingRequestToServer(ILogger logger, long requestId, Guid serverId); } public class RequestRouter { private readonly ILogger _routerLog; public void Route(long requestId, Guid serverId) { Log.RoutingRequestToServer(_routerLog, requestId, serverId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class EventParser { private readonly ILogger logger; public void Parse(Guid eventId, bool success) { logger.LogDebug("Parsing of event {EventId} was successful: {Success}.", eventId, success); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 94, Level = LogLevel.Debug, Message = "Parsing of event {EventId} was successful: {Success}.")] public static partial void ParsingResult(ILogger logger, Guid eventId, bool success); } public class EventParser { private readonly ILogger logger; public void Parse(Guid eventId, bool success) { Log.ParsingResult(logger, eventId, success); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class GeoService { private readonly ILogger _log; public void Check(double latitude, double longitude) { _log.LogInformation("Checking position: {Latitude},{Longitude}", latitude, longitude); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 95, Level = LogLevel.Information, Message = "Checking position: {Latitude},{Longitude}")] public static partial void CheckingGeoPosition(ILogger logger, double latitude, double longitude); } public class GeoService { private readonly ILogger _log; public void Check(double latitude, double longitude) { Log.CheckingGeoPosition(_log, latitude, longitude); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AclManager { private readonly ILogger _aclLog; public void Update(int principalId, string permissions) { _aclLog.LogWarning("Updating ACL for principal: {PrincipalId} with permissions {Permissions}", principalId, permissions); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 96, Level = LogLevel.Warning, Message = "Updating ACL for principal: {PrincipalId} with permissions {Permissions}")] public static partial void UpdatingAclPermissions(ILogger logger, int principalId, string permissions); } public class AclManager { private readonly ILogger _aclLog; public void Update(int principalId, string permissions) { Log.UpdatingAclPermissions(_aclLog, principalId, permissions); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class LanguageService { private readonly ILogger logger; public void Detect(float confidence) { logger.LogDebug("Detected language with confidence {Confidence}.", confidence); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 97, Level = LogLevel.Debug, Message = "Detected language with confidence {Confidence}.")] public static partial void LanguageDetectionConfidence(ILogger logger, float confidence); } public class LanguageService { private readonly ILogger logger; public void Detect(float confidence) { Log.LanguageDetectionConfidence(logger, confidence); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class RecommendationEngineWrapper { private readonly ILogger _recLog; public void LogRecommendation(int userId, bool includeSeen) { _recLog.LogTrace("Recommendation for user {UserId}. Include seen: {IncludeSeen}", userId, includeSeen); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 98, Level = LogLevel.Trace, Message = "Recommendation for user {UserId}. Include seen: {IncludeSeen}")] public static partial void RecommendationLog(ILogger logger, int userId, bool includeSeen); } public class RecommendationEngineWrapper { private readonly ILogger _recLog; public void LogRecommendation(int userId, bool includeSeen) { Log.RecommendationLog(_recLog, userId, includeSeen); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CustomEventLogger { private readonly ILogger logger; public void Log(string eventName, int eventId) { logger.LogInformation("Event: {EventName}, ID: {EventId}", eventName, eventId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 99, Level = LogLevel.Information, Message = "Event: {EventName}, ID: {EventId}")] public static partial void CustomEventLog(ILogger logger, string eventName, int eventId); } public class CustomEventLogger { private readonly ILogger logger; public void Log(string eventName, int eventId) { Log.CustomEventLog(logger, eventName, eventId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class UdpListenerService { private readonly ILogger _listenerLog; public void Listen(int port) { _listenerLog.LogInformation("Listening on port {Port}", port); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 100, Level = LogLevel.Information, Message = "Listening on port {Port}")] public static partial void UdpListenerStarting(ILogger logger, int port); } public class UdpListenerService { private readonly ILogger _listenerLog; public void Listen(int port) { Log.UdpListenerStarting(_listenerLog, port); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class WorkflowHost { private readonly ILogger _hostLogger; public void Start(Guid workflowId, int initialState) { _hostLogger.LogInformation("Starting workflow {WorkflowId} from state {InitialState}", workflowId, initialState); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 126, Level = LogLevel.Information, Message = "Starting workflow {WorkflowId} from state {InitialState}")] public static partial void StartingWorkflow(ILogger logger, Guid workflowId, int initialState); } public class WorkflowHost { private readonly ILogger _hostLogger; public void Start(Guid workflowId, int initialState) { Log.StartingWorkflow(_hostLogger, workflowId, initialState); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class BillingService { private readonly ILogger<BillingService> _billingLog; public void GenerateInvoice(int customerId, decimal amount) { _billingLog.LogDebug("Generating invoice for customer {CustomerId}. Amount: {Amount}", customerId, amount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 127, Level = LogLevel.Debug, Message = "Generating invoice for customer {CustomerId}. Amount: {Amount}")] public static partial void GeneratingInvoice(ILogger logger, int customerId, decimal amount); } public class BillingService { private readonly ILogger<BillingService> _billingLog; public void GenerateInvoice(int customerId, decimal amount) { Log.GeneratingInvoice(_billingLog, customerId, amount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class MatchmakingService { private readonly ILogger _matchLog; public void FindMatch(int playerId, int skillRating) { _matchLog.LogTrace("Finding match for player {PlayerId} with rating {SkillRating}", playerId, skillRating); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 128, Level = LogLevel.Trace, Message = "Finding match for player {PlayerId} with rating {SkillRating}")] public static partial void FindingMatch(ILogger logger, int playerId, int skillRating); } public class MatchmakingService { private readonly ILogger _matchLog; public void FindMatch(int playerId, int skillRating) { Log.FindingMatch(_matchLog, playerId, skillRating); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class NotificationDispatcher { private readonly ILogger<NotificationDispatcher> log; public void Dispatch(Guid notificationId, bool isUrgent) { log.LogInformation("Dispatching notification {NotificationId}. Urgent: {IsUrgent}", notificationId, isUrgent); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 129, Level = LogLevel.Information, Message = "Dispatching notification {NotificationId}. Urgent: {IsUrgent}")] public static partial void DispatchingNotification(ILogger logger, Guid notificationId, bool isUrgent); } public class NotificationDispatcher { private readonly ILogger<NotificationDispatcher> log; public void Dispatch(Guid notificationId, bool isUrgent) { Log.DispatchingNotification(log, notificationId, isUrgent); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class LocalizationProvider { private readonly ILogger _logger; public void LoadLanguage(string languageCode, int resourceCount) { _logger.LogInformation("Loading language {LanguageCode} with {ResourceCount} resources.", languageCode, resourceCount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 130, Level = LogLevel.Information, Message = "Loading language {LanguageCode} with {ResourceCount} resources.")] public static partial void LoadingLanguage(ILogger logger, string languageCode, int resourceCount); } public class LocalizationProvider { private readonly ILogger _logger; public void LoadLanguage(string languageCode, int resourceCount) { Log.LoadingLanguage(_logger, languageCode, resourceCount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class MetricsCollector { private readonly ILogger _metrics; public void Collect(string metricName, double value) { _metrics.LogTrace("Collected metric '{MetricName}' with value {Value}", metricName, value); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 131, Level = LogLevel.Trace, Message = "Collected metric '{MetricName}' with value {Value}")] public static partial void MetricCollected(ILogger logger, string metricName, double value); } public class MetricsCollector { private readonly ILogger _metrics; public void Collect(string metricName, double value) { Log.MetricCollected(_metrics, metricName, value); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CommandHandler { private readonly ILogger<CommandHandler> log; public void Handle(int commandId, Guid correlationId) { log.LogDebug("Handling command {CommandId} with correlation ID {CorrelationId}", commandId, correlationId); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 132, Level = LogLevel.Debug, Message = "Handling command {CommandId} with correlation ID {CorrelationId}")] public static partial void HandlingCommand(ILogger logger, int commandId, Guid correlationId); } public class CommandHandler { private readonly ILogger<CommandHandler> log; public void Handle(int commandId, Guid correlationId) { Log.HandlingCommand(log, commandId, correlationId); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class EventStore { private readonly ILogger _storeLog; public void Append(string streamId, long eventVersion) { _storeLog.LogInformation("Appending to stream {StreamId}. New version: {EventVersion}", streamId, eventVersion); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 133, Level = LogLevel.Information, Message = "Appending to stream {StreamId}. New version: {EventVersion}")] public static partial void AppendingToStream(ILogger logger, string streamId, long eventVersion); } public class EventStore { private readonly ILogger _storeLog; public void Append(string streamId, long eventVersion) { Log.AppendingToStream(_storeLog, streamId, eventVersion); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class RateLimiter { private readonly ILogger logger; public void Check(string clientId, int requestCount) { logger.LogWarning("Rate limit check for client {ClientId}. Request count: {RequestCount}", clientId, requestCount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 134, Level = LogLevel.Warning, Message = "Rate limit check for client {ClientId}. Request count: {RequestCount}")] public static partial void RateLimitCheck(ILogger logger, string clientId, int requestCount); } public class RateLimiter { private readonly ILogger logger; public void Check(string clientId, int requestCount) { Log.RateLimitCheck(logger, clientId, requestCount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class SnapshotCreator { private readonly ILogger _snapshotLog; public void Create(Guid aggregateId, int version) { _snapshotLog.LogError("Failed to create snapshot for aggregate {AggregateId} at version {Version}", aggregateId, version); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 135, Level = LogLevel.Error, Message = "Failed to create snapshot for aggregate {AggregateId} at version {Version}")] public static partial void SnapshotCreationFailed(ILogger logger, Guid aggregateId, int version); } public class SnapshotCreator { private readonly ILogger _snapshotLog; public void Create(Guid aggregateId, int version) { Log.SnapshotCreationFailed(_snapshotLog, aggregateId, version); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class PluginLoader { private readonly ILogger log; public void Load(string pluginName, Version pluginVersion) { log.LogInformation("Loading plugin {PluginName} version {PluginVersion}", pluginName, pluginVersion); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 136, Level = LogLevel.Information, Message = "Loading plugin {PluginName} version {PluginVersion}")] public static partial void LoadingPlugin(ILogger logger, string pluginName, Version pluginVersion); } public class PluginLoader { private readonly ILogger log; public void Load(string pluginName, Version pluginVersion) { Log.LoadingPlugin(log, pluginName, pluginVersion); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class AssetValidator { private readonly ILogger _validationLog; public void Validate(long assetId, bool isValid) { _validationLog.LogTrace("Validation for asset {AssetId} passed: {IsValid}", assetId, isValid); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 137, Level = LogLevel.Trace, Message = "Validation for asset {AssetId} passed: {IsValid}")] public static partial void AssetValidation(ILogger logger, long assetId, bool isValid); } public class AssetValidator { private readonly ILogger _validationLog; public void Validate(long assetId, bool isValid) { Log.AssetValidation(_validationLog, assetId, isValid); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class StreamProcessor { private readonly ILogger _streamLogger; public void Process(Guid streamId, long messageCount) { _streamLogger.LogDebug("Processing stream {StreamId} with {MessageCount} messages.", streamId, messageCount); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 138, Level = LogLevel.Debug, Message = "Processing stream {StreamId} with {MessageCount} messages.")] public static partial void ProcessingStream(ILogger logger, Guid streamId, long messageCount); } public class StreamProcessor { private readonly ILogger _streamLogger; public void Process(Guid streamId, long messageCount) { Log.ProcessingStream(_streamLogger, streamId, messageCount); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class CampaignManager { private readonly ILogger<CampaignManager> _logger; public void Launch(int campaignId, DateTime launchDate) { _logger.LogInformation("Launching campaign {CampaignId} on {LaunchDate}", campaignId, launchDate); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 139, Level = LogLevel.Information, Message = "Launching campaign {CampaignId} on {LaunchDate}")] public static partial void LaunchingCampaign(ILogger logger, int campaignId, DateTime launchDate); } public class CampaignManager { private readonly ILogger<CampaignManager> _logger; public void Launch(int campaignId, DateTime launchDate) { Log.LaunchingCampaign(_logger, campaignId, launchDate); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public class DeviceConnector { private readonly ILogger _log; public void Connect(int deviceId, bool isConnected) { _log.LogWarning("Device {DeviceId} connection status: {IsConnected}", deviceId, isConnected); } }
+
+### Response:
+{"has_defect": true, "defect_type": "Potential_Boxing_In_Structured_Log"}
+
+### Instruction:
+다음 C# 코드에서 로깅 시 발생하는 잠재적인 박싱(Boxing) 케이스로 인한 성능 결함을 분석하고, 그 유형을 JSON 형식으로 알려주세요.
+
+### Input:
+public static partial class Log { [LoggerMessage(EventId = 140, Level = LogLevel.Warning, Message = "Device {DeviceId} connection status: {IsConnected}")] public static partial void DeviceConnectionStatus(ILogger logger, int deviceId, bool isConnected); } public class DeviceConnector { private readonly ILogger _log; public void Connect(int deviceId, bool isConnected) { Log.DeviceConnectionStatus(_log, deviceId, isConnected); } }
+
+### Response:
+{"has_defect": false, "defect_type": "SourceGen_Optimized_Logging"}
+
