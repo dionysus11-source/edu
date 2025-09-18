@@ -11,6 +11,100 @@ import os
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, classification_report, confusion_matrix
 import numpy as np
 
+def get_model_info(model):
+    """모델의 파라미터 수와 예상 파일 크기 계산"""
+    # 전체 파라미터 수 계산
+    total_params = sum(p.numel() for p in model.parameters())
+    trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    
+    # 파일 크기 예측 (float32 기준: 4 bytes per parameter)
+    # 추가로 설정 파일, 토크나이저 등을 고려하여 약간의 오버헤드 추가
+    model_size_bytes = total_params * 4  # float32 = 4 bytes
+    additional_files_mb = 10  # 설정 파일, 토크나이저 등 약 10MB
+    total_size_mb = (model_size_bytes / (1024 * 1024)) + additional_files_mb
+    
+    return {
+        'total_params': total_params,
+        'trainable_params': trainable_params,
+        'model_size_mb': model_size_bytes / (1024 * 1024),
+        'total_size_mb': total_size_mb,
+        'model_size_gb': total_size_mb / 1024
+    }
+
+def print_model_info(model):
+    """모델 정보를 보기 좋게 출력"""
+    info = get_model_info(model)
+    
+    print("\n" + "="*50)
+    print("🔍 모델 정보")
+    print("="*50)
+    print(f"전체 파라미터 수: {info['total_params']:,}")
+    print(f"훈련 가능한 파라미터 수: {info['trainable_params']:,}")
+    print(f"모델 가중치 크기: {info['model_size_mb']:.1f} MB")
+    print(f"예상 총 파일 크기: {info['total_size_mb']:.1f} MB ({info['model_size_gb']:.2f} GB)")
+    
+    # 크기 비교 참고
+    print(f"\n📊 크기 비교:")
+    if info['total_params'] < 50_000_000:
+        size_category = "소형 모델"
+    elif info['total_params'] < 200_000_000:
+        size_category = "중형 모델"
+    elif info['total_params'] < 1_000_000_000:
+        size_category = "대형 모델"
+    else:
+        size_category = "초대형 모델"
+    
+    print(f"분류: {size_category}")
+    
+    # 메모리 사용량 예측
+    inference_memory_gb = (info['total_params'] * 4 * 2) / (1024**3)  # 모델 + 활성화 함수
+    print(f"예상 추론 메모리: ~{inference_memory_gb:.1f} GB")
+    
+    return info
+
+def get_actual_model_size(model_path):
+    """실제 저장된 모델 파일들의 크기 확인"""
+    if not os.path.exists(model_path):
+        return None
+    
+    total_size = 0
+    file_info = []
+    
+    for root, dirs, files in os.walk(model_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            size = os.path.getsize(file_path)
+            total_size += size
+            file_info.append({
+                'name': file,
+                'size_mb': size / (1024 * 1024)
+            })
+    
+    return {
+        'total_size_mb': total_size / (1024 * 1024),
+        'total_size_gb': total_size / (1024 * 1024 * 1024),
+        'files': file_info
+    }
+
+def print_actual_vs_predicted_size(model, model_path):
+    """예측 크기와 실제 크기 비교"""
+    predicted = get_model_info(model)
+    actual = get_actual_model_size(model_path)
+    
+    print(f"\n📏 크기 비교 (예측 vs 실제):")
+    print(f"예측 크기: {predicted['total_size_mb']:.1f} MB")
+    
+    if actual:
+        print(f"실제 크기: {actual['total_size_mb']:.1f} MB")
+        diff = actual['total_size_mb'] - predicted['total_size_mb']
+        print(f"차이: {diff:+.1f} MB")
+        
+        print(f"\n📁 파일 구성:")
+        for file_info in actual['files']:
+            print(f"  {file_info['name']}: {file_info['size_mb']:.1f} MB")
+    else:
+        print(f"실제 크기: 파일이 존재하지 않음")
+
 def load_boxing_dataset(file_path):
     """박싱 데이터셋 로드"""
     data = []
@@ -54,6 +148,12 @@ def evaluate_model(model_path, test_dataset_path=None):
     print(f"모델 로드 중: {model_path}")
     model = AutoModelForSequenceClassification.from_pretrained(model_path)
     tokenizer = AutoTokenizer.from_pretrained(model_path)
+    
+    # 모델 정보 출력
+    model_info = print_model_info(model)
+    
+    # 예측 vs 실제 크기 비교
+    print_actual_vs_predicted_size(model, model_path)
     
     # 테스트 데이터셋 로드
     if test_dataset_path and os.path.exists(test_dataset_path):
@@ -134,10 +234,13 @@ def evaluate_model(model_path, test_dataset_path=None):
         'true_labels': y_true
     }
 
-def test_single_text(model_path, text):
+def test_single_text(model_path, text, show_model_info=False):
     """단일 텍스트에 대한 예측"""
     model = AutoModelForSequenceClassification.from_pretrained(model_path)
     tokenizer = AutoTokenizer.from_pretrained(model_path)
+    
+    if show_model_info:
+        print_model_info(model)
     
     inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
     outputs = model(**inputs)
