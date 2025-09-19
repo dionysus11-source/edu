@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Iterable, List
 
 import pandas as pd
-from datasets import Dataset, concatenate_datasets
+from datasets import Dataset, concatenate_datasets, ClassLabel
 
 
 DEFAULT_SOURCES: List[Path] = [
@@ -74,6 +74,13 @@ def main() -> None:
     for dataset in datasets:
         if "has_defect" not in dataset.column_names:
             raise ValueError("Each dataset must contain a 'has_defect' column")
+
+        feature = dataset.features.get("has_defect")
+        if not isinstance(feature, ClassLabel):
+            dataset = dataset.cast_column(
+                "has_defect",
+                ClassLabel(names=["normal", "defect"]),
+            )
 
         split = dataset.train_test_split(
             test_size=args.test_size,
