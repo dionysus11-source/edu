@@ -1,7 +1,7 @@
 """Benchmark multiple transformer models for defect code classification.
 
 This script trains a lightweight classifier for each configured Hugging Face
-checkpoint on the enhanced boxing dataset, captures quality metrics and
+checkpoint on the prepared train/eval splits, captures quality metrics and
 resource measurements, and renders comparison charts to support model
 selection.
 """
@@ -9,11 +9,10 @@ selection.
 from __future__ import annotations
 
 import argparse
-import json
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional
+from typing import Dict, List, Optional
 
 import matplotlib
 
@@ -21,10 +20,9 @@ import matplotlib
 matplotlib.use("Agg")  # headless environments
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import seaborn as sns
-from datasets import Dataset, concatenate_datasets, load_from_disk
+from datasets import load_from_disk
 from sklearn.metrics import classification_report
 from transformers import (
     AutoModelForSequenceClassification,
@@ -56,67 +54,17 @@ MODEL_SPECS: List[ModelSpec] = [
     ModelSpec("DistilRoBERTa", "distilroberta-base", "general-purpose"),
 ]
 
+TRAIN_DATA_DIR = Path("train_dataset")
+EVAL_DATA_DIR = Path("test_dataset")
 
-def load_boxing_dataset(path: Path) -> Dataset:
-    """Load the boxing dataset JSONL file into a Hugging Face Dataset."""
 
-    texts: List[str] = []
-    labels: List[int] = []
-    defect_types: List[int] = []
-
-    with path.open("r", encoding="utf-8") as f:
-        for line in f:
-            row = json.loads(line)
-            texts.append(row["text"])
-            labels.append(int(row["has_defect"]))
-            defect_types.append(int(row.get("defect_type", 0)))
-
-    dataset = Dataset.from_dict({
-        "text": texts,
-        "labels": labels,
-        "defect_type": defect_types,
-    })
-
+def load_split_dataset(directory: Path):
+    if not directory.exists():
+        raise FileNotFoundError(f"Dataset directory not found: {directory}")
+    dataset = load_from_disk(str(directory))
+    if "text" not in dataset.column_names or "has_defect" not in dataset.column_names:
+        raise ValueError(f"Dataset at {directory} is missing required columns")
     return dataset
-
-
-def balanced_train_eval_split(
-    datasets: List[Dataset],
-    test_size: float,
-    seed: int,
-) -> Dict[str, Dataset]:
-    """Split each dataset individually and concatenate halves to keep proportions."""
-
-    train_parts: List[Dataset] = []
-    eval_parts: List[Dataset] = []
-
-    for ds in datasets:
-        if "labels" not in ds.column_names:
-            raise ValueError("Dataset must contain a 'labels' column for splitting")
-
-        split = ds.train_test_split(
-            test_size=test_size,
-            seed=seed,
-            stratify_by_column="labels",
-        )
-        train_parts.append(split["train"])
-        eval_parts.append(split["test"])
-
-    if not train_parts or not eval_parts:
-        raise ValueError("No datasets provided for splitting")
-
-    train_dataset = (
-        concatenate_datasets(train_parts).shuffle(seed=seed)
-        if len(train_parts) > 1
-        else train_parts[0].shuffle(seed=seed)
-    )
-    eval_dataset = (
-        concatenate_datasets(eval_parts).shuffle(seed=seed)
-        if len(eval_parts) > 1
-        else eval_parts[0].shuffle(seed=seed)
-    )
-
-    return {"train": train_dataset, "eval": eval_dataset}
 
 
 def compute_metrics(eval_pred) -> Dict[str, float]:
@@ -155,8 +103,8 @@ def compute_metrics(eval_pred) -> Dict[str, float]:
 
 
 def prepare_datasets(
-    train_dataset: Dataset,
-    eval_dataset: Dataset,
+    train_dataset,
+    eval_dataset,
     tokenizer,
     max_length: int,
     max_train_samples: Optional[int] = None,
@@ -171,6 +119,17 @@ def prepare_datasets(
             padding=False,
             max_length=max_length,
         )
+
+
+    def ensure_labels(dataset):
+        if "labels" in dataset.column_names:
+            return dataset
+        if "has_defect" not in dataset.column_names:
+            raise ValueError("Dataset is missing 'labels' or 'has_defect' column")
+        return dataset.rename_column("has_defect", "labels")
+
+    train_dataset = ensure_labels(train_dataset)
+    eval_dataset = ensure_labels(eval_dataset)
 
     remove_columns = [col for col in train_dataset.column_names if col != "labels"]
 
@@ -438,33 +397,15 @@ def plot_metrics(df: pd.DataFrame, output_dir: Path) -> None:
         plt.close()
 
 
-def load_test_dataset(path: Path) -> Optional[Dataset]:
-    """Load the persisted test dataset if available."""
-
-    if not path.exists():
-        return None
-
-    dataset = load_from_disk(str(path))
-    drop_cols = [
-        col
-        for col in dataset.column_names
-        if col not in {"text", "labels", "defect_type"}
-    ]
-    if drop_cols:
-        dataset = dataset.remove_columns(drop_cols)
-    return dataset
-
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Benchmark multiple transformer models")
-    parser.add_argument("--data", type=Path, default=Path("enhanced_boxing_dataset.jsonl"))
+    parser.add_argument("--train-dir", type=Path, default=TRAIN_DATA_DIR)
+    parser.add_argument("--eval-dir", type=Path, default=EVAL_DATA_DIR)
     parser.add_argument(
-        "--extra-data",
+        "--test-dir",
         type=Path,
-        action="append",
-        help="Additional JSONL datasets to include (e.g., singleton.jsonl)",
+        help="Optional separate test dataset directory (defaults to eval dir)",
     )
-    parser.add_argument("--test-dataset", type=Path, default=Path("test_dataset"))
     parser.add_argument("--output-dir", type=Path, default=Path("discover_model_outputs"))
     parser.add_argument("--epochs", type=int, default=3)
     parser.add_argument("--learning-rate", dest="learning_rate", type=float, default=2e-5)
@@ -485,17 +426,14 @@ def main() -> None:
     args = parse_args()
     set_seed(args.seed)
 
-    dataset_paths: List[Path] = [args.data]
-    if args.extra_data:
-        dataset_paths.extend(args.extra_data)
+    train_dataset = load_split_dataset(args.train_dir)
+    eval_dataset = load_split_dataset(args.eval_dir)
 
-    loaded_datasets: List[Dataset] = [load_boxing_dataset(path) for path in dataset_paths]
-
-    split = balanced_train_eval_split(loaded_datasets, test_size=0.2, seed=args.seed)
-    train_dataset = split["train"]
-    eval_dataset = split["eval"]
-
-    test_dataset = load_test_dataset(args.test_dataset)
+    test_dataset = None
+    if args.test_dir:
+        test_dataset = load_split_dataset(args.test_dir)
+    else:
+        test_dataset = eval_dataset
 
     output_dir = args.output_dir
     output_dir.mkdir(parents=True, exist_ok=True)

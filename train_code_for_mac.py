@@ -6,33 +6,41 @@ from transformers import (
     TrainerCallback,
     DataCollatorWithPadding
 )
-from datasets import Dataset
-import pandas as pd
-import json
+from datasets import load_from_disk
 import csv
 from pathlib import Path
 
-# 데이터 로드
-def load_boxing_dataset(file_path):
-    data = []
-    with open(file_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            data.append(json.loads(line))
-    return Dataset.from_pandas(pd.DataFrame(data))
+TRAIN_DATA_DIR = Path('train_dataset')
+EVAL_DATA_DIR = Path('test_dataset')
+MODEL_NAME = "microsoft/codebert-base"
+OUTPUT_DIR = Path("boxing-classifier")
+FINAL_DIR = Path("boxing-classifier-final")
+NUM_EPOCHS = 5
 
-# 데이터셋 로드
-dataset = load_boxing_dataset('enhanced_boxing_dataset.jsonl')
 
-# 모델과 토크나이저 초기화
-model_name = "microsoft/codebert-base"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+def load_split_dataset(directory: Path):
+    if not directory.exists():
+        raise FileNotFoundError(f"Dataset directory not found: {directory}")
+    dataset = load_from_disk(str(directory))
+    if "text" not in dataset.column_names or "has_defect" not in dataset.column_names:
+        raise ValueError(f"Dataset at {directory} is missing required columns")
+    return dataset
+
+
+raw_train_dataset = load_split_dataset(TRAIN_DATA_DIR)
+raw_eval_dataset = load_split_dataset(EVAL_DATA_DIR)
+
+
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 model = AutoModelForSequenceClassification.from_pretrained(
-    model_name,
+    MODEL_NAME,
     num_labels=2,  # has_defect: 0 or 1
     problem_type="single_label_classification"
 )
 
+
 # 토크나이징 함수
+
 def tokenize_function(examples):
     return tokenizer(
         examples["text"],
@@ -42,26 +50,27 @@ def tokenize_function(examples):
     )
 
 # 데이터셋 전처리
-tokenized_dataset = dataset.map(tokenize_function, batched=True)
-tokenized_dataset = tokenized_dataset.rename_column("has_defect", "labels")
+tokenized_train_dataset = raw_train_dataset.map(tokenize_function, batched=True)
+tokenized_eval_dataset = raw_eval_dataset.map(tokenize_function, batched=True)
 
-# 훈련/검증 분할
-train_test_split = tokenized_dataset.train_test_split(test_size=0.2, seed=42)
-train_dataset = train_test_split["train"]
-eval_dataset = train_test_split["test"]
+tokenized_train_dataset = tokenized_train_dataset.rename_column("has_defect", "labels")
+tokenized_eval_dataset = tokenized_eval_dataset.rename_column("has_defect", "labels")
+
+train_dataset = tokenized_train_dataset
+eval_dataset = tokenized_eval_dataset
 
 # 데이터 콜레이터
 data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
 # 훈련 설정
 training_args = TrainingArguments(
-    output_dir="./boxing-classifier",
+    output_dir=str(OUTPUT_DIR),
     learning_rate=2e-5,
     per_device_train_batch_size=1,  # 배치 크기를 줄여 VRAM/RAM 사용량 감소
     per_device_eval_batch_size=1,
     gradient_accumulation_steps=8,  # 효과적인 배치 크기 유지
     gradient_checkpointing=True,
-    num_train_epochs=5,
+    num_train_epochs=NUM_EPOCHS,
     weight_decay=0.01,
     eval_strategy="epoch",
     save_strategy="epoch",
@@ -75,7 +84,6 @@ training_args = TrainingArguments(
 
 # 평가 메트릭
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, classification_report, confusion_matrix
-import numpy as np
 
 LABEL_NAMES = {0: 'normal', 1: 'defect'}
 
@@ -157,10 +165,7 @@ trainer.add_callback(metrics_logger)
 trainer.train()
 
 # 모델 저장
-trainer.save_model("./boxing-classifier-final")
-
-# 테스트 데이터셋 저장 (나중에 정확한 평가를 위해)
-eval_dataset.save_to_disk("./test_dataset")
+trainer.save_model(str(args.final_dir))
 
 # 테스트 셋 검증 함수
 def evaluate_on_test_set(trainer, test_dataset):
@@ -225,9 +230,10 @@ def test_saved_model(model_path, test_dataset, tokenizer):
 # 현재 훈련된 모델로 테스트 셋 검증
 test_results = evaluate_on_test_set(trainer, eval_dataset)
 
-print(f"\n모델이 './boxing-classifier-final'에 저장되었습니다.")
-print(f"테스트 데이터셋이 './test_dataset'에 저장되었습니다.")
-print("\n나중에 저장된 모델을 정확한 테스트 셋으로 평가하려면:")
+print(f"\n모델이 '{FINAL_DIR.as_posix()}'에 저장되었습니다.")
+print(f"검증 데이터 분할은 '{TRAIN_DATA_DIR.as_posix()}'과 '{EVAL_DATA_DIR.as_posix()}'에서 관리됩니다.")
+print("필요 시 'split_dataset.py'를 다시 실행해 분할을 갱신하세요.")
+print("\n나중에 저장된 모델을 동일한 검증 셋으로 평가하려면:")
 print("python test_model.py")
 print("\n또는 코드에서 직접:")
-print("test_saved_model('./boxing-classifier-final', eval_dataset, tokenizer)")
+print(f"test_saved_model('{FINAL_DIR.as_posix()}', eval_dataset, tokenizer)")

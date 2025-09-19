@@ -1,0 +1,15 @@
+# Workflow Overview
+
+1. Update data splits whenever JSONL sources change:
+   python split_dataset.py --source enhanced_boxing_dataset.jsonl --source singleton.jsonl [--source new_file.jsonl]
+
+2. Train the CodeBERT classifier using the prepared split directories:
+   python train_code_for_mac.py
+
+3. (Optional) Benchmark multiple models on the same splits:
+   python discover_model.py --epochs 3 --train-batch-size 2 --eval-batch-size 2 [--test-dir separate_test_dir]
+
+Outputs:
+- Split datasets stored in train_dataset/ and test_dataset/
+- Trained model stored in boxing-classifier-final/
+- Benchmark artifacts saved under discover_model_outputs/
