@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from datasets import Dataset, load_from_disk
+from datasets import Dataset, concatenate_datasets, load_from_disk
 from sklearn.metrics import classification_report
 from transformers import (
     AutoModelForSequenceClassification,
@@ -78,6 +78,45 @@ def load_boxing_dataset(path: Path) -> Dataset:
     })
 
     return dataset
+
+
+def balanced_train_eval_split(
+    datasets: List[Dataset],
+    test_size: float,
+    seed: int,
+) -> Dict[str, Dataset]:
+    """Split each dataset individually and concatenate halves to keep proportions."""
+
+    train_parts: List[Dataset] = []
+    eval_parts: List[Dataset] = []
+
+    for ds in datasets:
+        if "labels" not in ds.column_names:
+            raise ValueError("Dataset must contain a 'labels' column for splitting")
+
+        split = ds.train_test_split(
+            test_size=test_size,
+            seed=seed,
+            stratify_by_column="labels",
+        )
+        train_parts.append(split["train"])
+        eval_parts.append(split["test"])
+
+    if not train_parts or not eval_parts:
+        raise ValueError("No datasets provided for splitting")
+
+    train_dataset = (
+        concatenate_datasets(train_parts).shuffle(seed=seed)
+        if len(train_parts) > 1
+        else train_parts[0].shuffle(seed=seed)
+    )
+    eval_dataset = (
+        concatenate_datasets(eval_parts).shuffle(seed=seed)
+        if len(eval_parts) > 1
+        else eval_parts[0].shuffle(seed=seed)
+    )
+
+    return {"train": train_dataset, "eval": eval_dataset}
 
 
 def compute_metrics(eval_pred) -> Dict[str, float]:
@@ -419,6 +458,12 @@ def load_test_dataset(path: Path) -> Optional[Dataset]:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Benchmark multiple transformer models")
     parser.add_argument("--data", type=Path, default=Path("enhanced_boxing_dataset.jsonl"))
+    parser.add_argument(
+        "--extra-data",
+        type=Path,
+        action="append",
+        help="Additional JSONL datasets to include (e.g., singleton.jsonl)",
+    )
     parser.add_argument("--test-dataset", type=Path, default=Path("test_dataset"))
     parser.add_argument("--output-dir", type=Path, default=Path("discover_model_outputs"))
     parser.add_argument("--epochs", type=int, default=3)
@@ -440,12 +485,15 @@ def main() -> None:
     args = parse_args()
     set_seed(args.seed)
 
-    dataset = load_boxing_dataset(args.data)
-    dataset = dataset.remove_columns([col for col in dataset.column_names if col == "defect_type"])
+    dataset_paths: List[Path] = [args.data]
+    if args.extra_data:
+        dataset_paths.extend(args.extra_data)
 
-    split = dataset.train_test_split(test_size=0.2, seed=args.seed)
+    loaded_datasets: List[Dataset] = [load_boxing_dataset(path) for path in dataset_paths]
+
+    split = balanced_train_eval_split(loaded_datasets, test_size=0.2, seed=args.seed)
     train_dataset = split["train"]
-    eval_dataset = split["test"]
+    eval_dataset = split["eval"]
 
     test_dataset = load_test_dataset(args.test_dataset)
 
