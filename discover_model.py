@@ -202,21 +202,35 @@ def benchmark_model(
     model_output_dir = output_dir / f"{spec.display_name.replace(' ', '_').lower()}"
     model_output_dir.mkdir(parents=True, exist_ok=True)
 
-    training_args = TrainingArguments(
+    init_params = TrainingArguments.__init__.__code__.co_varnames
+
+    training_args_kwargs = dict(
         output_dir=str(model_output_dir),
         num_train_epochs=args.epochs,
         per_device_train_batch_size=args.train_batch_size,
         per_device_eval_batch_size=args.eval_batch_size,
         learning_rate=args.learning_rate,
         weight_decay=args.weight_decay,
-        evaluation_strategy="epoch",
-        save_strategy="no",
-        report_to="none",
-        logging_strategy="steps",
-        logging_steps=args.logging_steps,
-        seed=args.seed,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
+        seed=args.seed,
     )
+
+    if "logging_strategy" in init_params:
+        training_args_kwargs["logging_strategy"] = "steps"
+    if "logging_steps" in init_params:
+        training_args_kwargs["logging_steps"] = args.logging_steps
+    if "report_to" in init_params:
+        training_args_kwargs["report_to"] = "none"
+    if "save_strategy" in init_params:
+        training_args_kwargs["save_strategy"] = "no"
+
+    # Older Transformers (<4.10) expect eval_strategy instead of evaluation_strategy.
+    if "eval_strategy" in init_params:
+        training_args_kwargs["eval_strategy"] = "epoch"
+    elif "evaluation_strategy" in init_params:
+        training_args_kwargs["evaluation_strategy"] = "epoch"
+
+    training_args = TrainingArguments(**training_args_kwargs)
 
     trainer = Trainer(
         model=model,
@@ -462,4 +476,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
