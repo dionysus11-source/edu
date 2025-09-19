@@ -3,11 +3,14 @@ from transformers import (
     AutoModelForSequenceClassification,
     TrainingArguments,
     Trainer,
+    TrainerCallback,
     DataCollatorWithPadding
 )
 from datasets import Dataset
 import pandas as pd
 import json
+import csv
+from pathlib import Path
 
 # 데이터 로드
 def load_boxing_dataset(file_path):
@@ -74,19 +77,67 @@ training_args = TrainingArguments(
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, classification_report, confusion_matrix
 import numpy as np
 
+LABEL_NAMES = {0: 'normal', 1: 'defect'}
+
+
 def compute_metrics(eval_pred):
     predictions, labels = eval_pred
     predictions = predictions.argmax(axis=-1)
-    
-    accuracy = accuracy_score(labels, predictions)
-    precision, recall, f1, _ = precision_recall_fscore_support(labels, predictions, average='weighted')
-    
-    return {
-        'accuracy': accuracy,
-        'f1': f1,
-        'precision': precision,
-        'recall': recall
+
+    report = classification_report(labels, predictions, output_dict=True, zero_division=0)
+    weighted = report.get('weighted avg', {})
+
+    metrics = {
+        'accuracy': report.get('accuracy', 0.0),
+        'precision': weighted.get('precision', 0.0),
+        'recall': weighted.get('recall', 0.0),
+        'f1': weighted.get('f1-score', 0.0),
     }
+
+    for label_id, label_name in LABEL_NAMES.items():
+        label_key = str(label_id)
+        label_stats = report.get(label_key, {})
+        metrics[f"{label_name}_precision"] = label_stats.get('precision', 0.0)
+        metrics[f"{label_name}_recall"] = label_stats.get('recall', 0.0)
+        metrics[f"{label_name}_f1"] = label_stats.get('f1-score', 0.0)
+        metrics[f"{label_name}_support"] = label_stats.get('support', 0)
+
+    return metrics
+
+class MetricsCSVLogger(TrainerCallback):
+    def __init__(self, output_path: str = 'logs/metrics_history.csv', metric_prefix: str = 'eval_'):
+        self.output_path = Path(output_path)
+        self.metric_prefix = metric_prefix
+        self.fieldnames = None
+
+    def on_evaluate(self, args, state, control, metrics=None, **kwargs):
+        if metrics is None:
+            return
+
+        eval_metrics = {k: v for k, v in metrics.items() if k.startswith(self.metric_prefix)}
+        if not eval_metrics:
+            return
+
+        epoch = state.epoch if state.epoch is not None else state.global_step
+        eval_metrics['epoch'] = epoch
+
+        if self.fieldnames is None:
+            self.fieldnames = ['epoch'] + [k for k in sorted(eval_metrics.keys()) if k != 'epoch']
+        else:
+            for key in eval_metrics.keys():
+                if key not in self.fieldnames:
+                    self.fieldnames.append(key)
+
+        row = {key: eval_metrics.get(key) for key in self.fieldnames}
+
+        self.output_path.parent.mkdir(parents=True, exist_ok=True)
+        write_header = not self.output_path.exists()
+        with self.output_path.open('a', newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=self.fieldnames)
+            if write_header:
+                writer.writeheader()
+            writer.writerow(row)
+
 
 # 트레이너 초기화
 trainer = Trainer(
@@ -98,6 +149,9 @@ trainer = Trainer(
     data_collator=data_collator,
     compute_metrics=compute_metrics,
 )
+
+metrics_logger = MetricsCSVLogger()
+trainer.add_callback(metrics_logger)
 
 # 훈련 실행
 trainer.train()
