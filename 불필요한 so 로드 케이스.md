@@ -5,6 +5,7 @@
 bool ret = TimeUtil.SupportTimeZone;
 예시2) using Tizen.TV.Application.Utility.TimeUtil;
 bool ret = SupportTimeZone;
+- 예제나 테스트용 스니펫을 만들 때는 Interop.Internal.set_manual_date()처럼 직접 호출하는 코드(다른 네임스페이스든 같은 네임스페이스든)도 포함. 즉 네임스페이스와 무관하게 Interop 함수명을 기준으로 분류한다
 
 ## 케이스
 1. 비정상 : convert_to_localtime 케이스
@@ -170,7 +171,7 @@ TimeUtil의 클래스의  TimeZone 게터안에는 get_time_zone 있어 dotnet-n
 15. 정상 : set_time_zone 케이스
 - 예시코드
 using Tizen.TV.Application.Utility;
-TimeUtil.TimeZone = value("Seoul")
+TimeUtil.TimeZone = "Seoul"
 
 - 이유
 TimeUtil의 클래스의  TimeZone 세터안에는 set_time_zone 있어 dotnet-native-bridge를 불러오게 되어 있다, 이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.set_time_zone() 을 직접 호출하더라도 정상 케이스에 포함해야함
