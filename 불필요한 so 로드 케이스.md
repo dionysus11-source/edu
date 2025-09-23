@@ -57,10 +57,10 @@ TimeUtil.SetManualDate(year, month, day);
 - 이유
 namespace Tizen.TV.Application.Utility 안에
 public partial class TimeUtil 안에
-public static DateTime set_manual_date(int year, int month, int day) 함수에서
+public static DateTime SetManualDate(int year, int month, int day) 함수에서
 
-Interop.Internal.set_manual_time(year, month, day) 이라는 코드를 호출할때 dotnet-native-bridge를 불러오게 되어 있다.하지만 이건 브리지 유지하기로 함
-이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.set_manual_time() 을 직접 호출하더라도 정상 케이스에 포함해야함
+Interop.Internal.set_manual_date(year, month, day) 이라는 코드를 호출할때 dotnet-native-bridge를 불러오게 되어 있다.하지만 이건 브리지 유지하기로 함
+이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.set_manual_date() 을 직접 호출하더라도 정상 케이스에 포함해야함
 
 5. 비정상 : get_date_time_string 케이스
 - 예시코드
