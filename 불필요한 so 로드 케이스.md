@@ -91,3 +91,33 @@ string ret = Interop.Internal.get_time_string(ulEpochSeconds, bEnableSeconds) �
 Interop.CommonBridge.free_native_data(ptr);
 - 이유
 Interop 클래스의 CommonBridge 클래스의 free_native_data(IntPtr data) 이라는 코드를 호출할때 dotnet-native-bridge를 불러오게 되어 있다.
+
+9. 정상 : flag_24hour_support 케이스
+- 예시코드
+using Tizen.LFD.App.Signage.ScheduleApp.ScheduleCommon
+ScheduleUtil.Is24HourSupport()
+
+- 이유
+namespace Tizen.LFD.App.Signage.ScheduleApp.ScheduleCommon{
+	internal static bool Is24HourSupport()
+	{
+		return TimeUtil.Support24Hour;
+	}
+}
+TimeUtil클래스의 Support24Hour 게터에서 return Interop.Internal.flag_24hour_support(); 로 줌
+
+10. 비정상 : get_current_time 케이스
+- 예시코드
+using Tizen.TV.Application.Utility
+DateTime crtTime = TimeUtil.CurrentTime;
+
+- 이유
+Tizen.TV.Application.Utility namespace의 TimeUtil 클래스의 CurrentTime 게터에서 Interop.Internal.get_current_time(out nyear, out nMonth, out nDay, out nHour, out nMin, out nSeconds); 를 호출함으로써 dotnet-native-bridge를 불러오게 되어 있다.
+
+11. 비정상 : get_current_time_raw 케이스
+- 예시코드
+using Tizen.TV.Application.Utility
+uint time = TimeUtil.CurrentTimeRaw;
+
+- 이유
+Tizen.TV.Application.Utility namespace의 TimeUtil 클래스의 CurrentTime 게터에서 Interop.Internal.get_current_time_raw(); 를 호출함으로써 dotnet-native-bridge를 불러오게 되어 있다.
