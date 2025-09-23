@@ -1,8 +1,8 @@
 > 대체 가능 함수
 
-  - get_week_day, get_Weekday_name: new DateTime(year, month, day).DayOfWeek, CultureInfo.CurrentCulture.DateTimeFormat.GetDayName.
-  - is_leap_year, last_Day: DateTime.IsLeapYear(year), DateTime.DaysInMonth(year, month).
-  - get_Current_time, get_Current_time_raw, get_current_time, get_time_String: DateTime.Now, DateTime.UtcNow, DateTimeOffset.Now에서 연·월·일·시·분·초 분해.
+  - ~~get_week_day~~, get_Weekday_name: new DateTime(year, month, day).DayOfWeek, CultureInfo.CurrentCulture.DateTimeFormat.GetDayName.
+  - ~~is_leap_year~~, last_Day: DateTime.IsLeapYear(year), DateTime.DaysInMonth(year, month).
+  - ~~get_Current_time~~, ~~get_Current_time_raw~~, get_current_time, get_time_String: DateTime.Now, DateTime.UtcNow, DateTimeOffset.Now에서 연·월·일·시·분·초 분해.
   - get_linux_time, get_network_Timestamp: DateTimeOffset.UtcNow.ToUnixTimeSeconds() 등으로 대체 가능(단, 후자는 NTP 기반 값이라면 별도 API 필요).
   - unsigned_gmtime_r, unsigned_Timegm, ~~convert_to_localtime~~, ~~convert_to_utctime~~: DateTimeOffset.FromUnixTimeSeconds, ToUnixTimeSeconds, ToLocalTime(), ToUniversalTime()로 처리.
   - get_time_offset: TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow) 사용.
