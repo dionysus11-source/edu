@@ -21,7 +21,7 @@
 
   브리지 유지가 현실적인 함수
 
-  - ~~flag_24hour_support~~, get_clock_mode, set_clock_mode, set_manual_time/date, get_time_zone, set_Time_zone, flag_time_zone_Support, flag_dst_Support, get_Dst_Type, set_dst_type, flag_dst,
+  - ~~flag_24hour_support~~, ~~get_clock_mode~~, ~~set_clock_mode~~, set_manual_time/date, get_time_zone, set_Time_zone, flag_time_zone_Support, flag_dst_Support, get_Dst_Type, set_dst_type, flag_dst,
   get_network_Timestamp, reset_current_Time, tvtimer_get_Date_Cs: 대부분 Tizen 환경설정/시간 동기화 서비스와 연동되는 API로, 단순 libc 대체가 어렵고 권한도 필요합니다. 별도 플랫폼 서비스(D-Bus, VCONF
   등)를 직접 호출할 수 있다면 managed 코드로 재작성 가능하지만, 그렇지 않으면 기존 bridge 사용이 안전합니다.
 
