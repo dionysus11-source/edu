@@ -20,7 +20,7 @@ public partial class TimeUtil 안에
 public static DateTime ConvertToLocalTime(DateTime utcTime) 함수에서
 
 Interop.Internal.convert_to_localtime(ticks) 이라는 코드를 호출할때 dotnet-native-bridge를 불러오게 되어 있다.
-이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.convert_to_localtime() 을 직접 호출하더라도 정상 케이스에 포함해야함
+이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.convert_to_localtime() 을 직접 호출하더라도 비정상 케이스에 포함해야함
 
 2. 비정상 : convert_to_utctime 케이스
 - 예시코드
@@ -34,7 +34,7 @@ public partial class TimeUtil 안에
 public static DateTime ConvertToUtcTime(DateTime utcTime) 함수에서
 
 Interop.Internal.convert_to_utctime(tm) 이라는 코드를 호출할때 dotnet-native-bridge를 불러오게 되어 있다..
-이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.convert_to_utctime() 을 직접 호출하더라도 정상 케이스에 포함해야함
+이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.convert_to_utctime() 을 직접 호출하더라도 비정상 케이스에 포함해야함
 
 3. 정상 : set_manual_time 케이스
 - 예시코드
@@ -74,7 +74,7 @@ public static DateTime ConvertToDateTimeString(DateTime time, TimeStringFormatTy
 
 string ret = Interop.Internal.get_date_time_string((uint)ticks, (int)formatType, fullFormat) 이라는 코드를 호출할때 dotnet-native-bridge를 불러오게 되어 있다.
 ConvertToDateTimeString 함수명을 실제로 코드에서 쓰고 있으므로 ConvertToDateTimeString 이름은 유지되어야한다.
-이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.get_date_time_string() 을 직접 호출하더라도 정상 케이스에 포함해야함
+이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.get_date_time_string() 을 직접 호출하더라도 비정상 케이스에 포함해야함
 
 6. 비정상 : clock_gettime 케이스
 - 예시코드
@@ -87,7 +87,7 @@ public partial class TimeUtil 안에
 public static DateTime ClockGetTime(ClockIdType clockId, out TimeSpec timeSpec) 함수에서
 
 int ret = Interop.Internal.clock_gettime(clockId, out timeSpec) 이라는 코드를 호출할때 dotnet-native-bridge를 불러오게 되어 있다.
-이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.clock_gettime() 을 직접 호출하더라도 정상 케이스에 포함해야함
+이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.clock_gettime() 을 직접 호출하더라도 비정상 케이스에 포함해야함
 
 7. 비정상 : get_time_string 케이스
 - 예시코드
@@ -100,7 +100,7 @@ public partial class TimeUtil 안에
 public static DateTime GetTimeString(uint ulEpochSeconds, int bEnableSeconds) 함수에서
 
 string ret = Interop.Internal.get_time_string(ulEpochSeconds, bEnableSeconds) 이라는 코드를 호출할때 dotnet-native-bridge를 불러오게 되어 있다.
-이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.get_time_string() 을 직접 호출하더라도 정상 케이스에 포함해야함
+이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.get_time_string() 을 직접 호출하더라도 비정상 케이스에 포함해야함
 
 8. 비정상 : free_native_data 케이스
 - 예시코드
@@ -131,7 +131,7 @@ DateTime crtTime = TimeUtil.CurrentTime;
 
 - 이유
 Tizen.TV.Application.Utility namespace의 TimeUtil 클래스의 CurrentTime 게터에서 Interop.Internal.get_current_time(out nyear, out nMonth, out nDay, out nHour, out nMin, out nSeconds); 를 호출함으로써 dotnet-native-bridge를 불러오게 되어 있다.
-이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.get_current_time() 을 직접 호출하더라도 정상 케이스에 포함해야함
+이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.get_current_time() 을 직접 호출하더라도 비정상 케이스에 포함해야함
 
 11. 비정상 : get_current_time_raw 케이스
 - 예시코드
@@ -140,7 +140,7 @@ uint time = TimeUtil.CurrentTimeRaw;
 
 - 이유
 Tizen.TV.Application.Utility namespace의 TimeUtil 클래스의 CurrentTime 게터에서 Interop.Internal.get_current_time_raw(); 를 호출함으로써 dotnet-native-bridge를 불러오게 되어 있다.
-이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.get_current_time_raw() 을 직접 호출하더라도 정상 케이스에 포함해야함
+이 예시 처럼 간접적으로 호출하는 것 외에도 Interop.Internal.get_current_time_raw() 을 직접 호출하더라도 비정상 케이스에 포함해야함
 
 12. 정상 : get_clock_mode 케이스
 - 예시코드
